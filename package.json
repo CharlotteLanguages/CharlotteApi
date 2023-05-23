@@ -2,12 +2,27 @@
   "name": "nodejs-app",
   "version": "1.0.0",
   "description": "A minimal Node.js web application.",
-  "main": "index.js",
+  "main": "server.js",
   "author": "alphasec",
   "license": "MIT",
-   "dependencies": {
-  },
   "scripts": {
-    "start": "node index.js"
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CharlotteLanguages/CharlotteApi.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/CharlotteLanguages/CharlotteApi/issues"
+  },
+  "homepage": "https://github.com/CharlotteLanguages/CharlotteApi#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-myconnection": "^1.0.4",
+    "mysql2": "^3.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
   }
 }
