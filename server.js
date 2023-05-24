@@ -5,6 +5,7 @@ const myconn = require('express-myconnection')
 const routesMembership = require('./routes/membership_routes')
 const routesStudent = require('./routes/student_routes')
 const routesNews = require('./routes/news_routes')
+const routesCourses = require('./routes/courses_routers')
 
 const app = express()
 app.set('port', process.env.PORT || 3000)
@@ -28,6 +29,7 @@ app.get('/', (req, res) =>{
 app.use('/membership', routesMembership)
 app.use('/student', routesStudent)
 app.use('/news', routesNews)
+app.use('/user', routesCourses)
 
 //------------------------ Server running ------------------------
 app.listen(app.get('port'), () => {
