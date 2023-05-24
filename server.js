@@ -2,7 +2,8 @@ const express = require('express')
 const mysql = require('mysql2')
 const myconn = require('express-myconnection')
 
-const routes = require('./routes')
+const routesMembership = require('./routes/membership_routes')
+const routesStudent = require('./routes/student_routes')
 
 const app = express()
 app.set('port', process.env.PORT || 3000)
@@ -23,7 +24,8 @@ app.get('/', (req, res) =>{
     res.send('Bienvenido')
 })
 
-app.use('/membership', routes)
+app.use('/membership', routesMembership)
+app.use('/student', routesStudent)
 
 //------------------------ Server running ------------------------
 app.listen(app.get('port'), () => {
