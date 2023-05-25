@@ -1,11 +1,13 @@
 const express = require('express')
 const mysql = require('mysql2')
 const myconn = require('express-myconnection')
+const cors = require('cors')
 
 const routesMembership = require('./routes/membership_routes')
 const routesStudent = require('./routes/student_routes')
 const routesNews = require('./routes/news_routes')
 const routesCourses = require('./routes/courses_routers')
+const routesActivities = require('./routes/activities_routers')
 
 const app = express()
 app.set('port', process.env.PORT || 3000)
@@ -20,6 +22,7 @@ const dbOptions = {
 //------------------------ Middlewares ------------------------
 app.use(myconn(mysql, dbOptions, 'single'))
 app.use(express.json())
+app.use(cors())
 
 //------------------------ Routes ------------------------
 app.get('/', (req, res) =>{
@@ -29,7 +32,8 @@ app.get('/', (req, res) =>{
 app.use('/membership', routesMembership)
 app.use('/student', routesStudent)
 app.use('/news', routesNews)
-app.use('/user', routesCourses)
+app.use('/course', routesCourses)
+app.use('/activities', routesActivities)
 
 //------------------------ Server running ------------------------
 app.listen(app.get('port'), () => {
