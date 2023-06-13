@@ -3,6 +3,14 @@ const mysql = require('mysql2')
 const myconn = require('express-myconnection')
 const cors = require('cors')
 
+//--------news
+var db  = require('./dbConnection');
+const createError = require('http-errors');
+const path = require('path');
+const bodyParser = require('body-parser');
+const indexRouter = require('./router.js');
+//--------
+
 const routesMembership = require('./routes/membership_routes')
 const routesStudent = require('./routes/student_routes')
 const routesNews = require('./routes/news_routes')
@@ -17,6 +25,11 @@ const routesSponsors = require('./routes/sponsor_routers')
 const routesResenas = require('./routes/reviews_routers')
 
 const app = express()
+app.use(express.json())
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({
+    extended: true,
+}));
 app.set('port', process.env.PORT || 3000)
 const dbOptions = {
     host: 'containers-us-west-153.railway.app',
@@ -48,6 +61,8 @@ app.use('/promotions', routesPromociones)
 app.use('/referrals', routesReferrals)
 app.use('/sponsor', routesSponsors)
 app.use('/reviews', routesResenas)
+
+app.use('/api', indexRouter)
 
 //------------------------ Server running ------------------------
 app.listen(app.get('port'), () => {
