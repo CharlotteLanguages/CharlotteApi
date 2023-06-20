@@ -3,6 +3,8 @@ const mysql = require('mysql2')
 const myconn = require('express-myconnection')
 const cors = require('cors')
 
+const payment_router = require('./payment_routers.js')
+
 //--------news
 var db  = require('./dbConnection');
 const createError = require('http-errors');
@@ -63,6 +65,8 @@ app.use('/sponsor', routesSponsors)
 app.use('/reviews', routesResenas)
 
 app.use('/api', indexRouter)
+
+app.use('/payment', payment_router)
 
 //------------------------ Server running ------------------------
 app.listen(app.get('port'), () => {
