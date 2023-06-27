@@ -25,6 +25,7 @@ const routesPromociones = require('./routes/promociones_routers')
 const routesReferrals = require('./routes/referrals_routers')
 const routesSponsors = require('./routes/sponsor_routers')
 const routesResenas = require('./routes/reviews_routers')
+const routesRoles = require('./routes/roles_routers')
 
 const app = express()
 app.use(express.json())
@@ -63,6 +64,7 @@ app.use('/promotions', routesPromociones)
 app.use('/referrals', routesReferrals)
 app.use('/sponsor', routesSponsors)
 app.use('/reviews', routesResenas)
+app.use('/roles', routesRoules )
 
 app.use('/api', indexRouter)
 
