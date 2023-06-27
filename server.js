@@ -64,7 +64,7 @@ app.use('/promotions', routesPromociones)
 app.use('/referrals', routesReferrals)
 app.use('/sponsor', routesSponsors)
 app.use('/reviews', routesResenas)
-app.use('/roles', routesRoules )
+app.use('/roles', routesRoles )
 
 app.use('/api', indexRouter)
 
