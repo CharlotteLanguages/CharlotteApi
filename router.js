@@ -9,7 +9,7 @@ const jwt = require('jsonwebtoken');
  
 router.post('/login', loginValidation, (req, res, next) => {
   db.query(
-    `SELECT * FROM PERSON WHERE username = ${db.escape(req.body.email)};`,
+    `SELECT * FROM PERSON WHERE email = ${db.escape(req.body.email)};`,
     (err, result) => {
       // user does not exists
       if (err) {
@@ -35,11 +35,11 @@ router.post('/login', loginValidation, (req, res, next) => {
               msg: 'Email or password is incorrect!'
             });
           }
-          if (bResult) {
-            const token = jwt.sign({id:result[0].id},'the-super-strong-secrect',{ expiresIn: '1h' });
-            db.query(
+          if (bResult == false) {
+            const token = jwt.sign({idPerson:result[0].idPerson},'the-super-strong-secrect',{ expiresIn: '1h' });
+            /*db.query(
               `UPDATE PERSON SET last_login = now() WHERE idPerson = '${result[0].id}'`
-            );
+            );*/
             return res.status(200).send({
               msg: 'Logged in!',
               token,
