@@ -70,7 +70,7 @@ app.use('/register', routesRegister)
 
 app.use('/api', indexRouter)
 
-//app.use('/payment', payment_router)
+/*app.use('/payment', payment_router)*/
 
 //------------------------ Server running ------------------------
 app.listen(app.get('port'), () => {
