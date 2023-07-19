@@ -2,7 +2,7 @@ const express = require('express');
 const routes = express.Router()
 
 
-
+/* METODO POST */
 routes.get('/', (req, res) =>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
