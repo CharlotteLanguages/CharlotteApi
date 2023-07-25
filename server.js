@@ -28,6 +28,10 @@ const routesResenas = require('./routes/reviews_routers')
 const routesRol = require('./routes/rol_routers')
 const routesRegister = require('./routes/register_routers')
 
+const routesRazones = require('./routes/razones_routers')
+
+//const routesImagen = require('./routes/image_routers')
+
 const app = express()
 app.use(express.json())
 app.use(bodyParser.json())
@@ -47,6 +51,7 @@ const dbOptions = {
 app.use(myconn(mysql, dbOptions, 'single'))
 app.use(express.json())
 app.use(cors())
+//const upload = multer({ dest: 'uploads/' })
 
 //------------------------ Routes ------------------------
 app.get('/', (req, res) =>{
@@ -69,6 +74,10 @@ app.use('/rol', routesRol )
 app.use('/register', routesRegister)
 
 app.use('/api', indexRouter)
+
+app.use('/razon', routesRazones)
+
+//app.use('/imagen', routesImagen)
 
 /*app.use('/payment', payment_router)*/
 
