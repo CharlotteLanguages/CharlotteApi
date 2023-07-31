@@ -2,6 +2,7 @@ const express = require('express')
 const mysql = require('mysql2')
 const myconn = require('express-myconnection')
 const cors = require('cors')
+const routes = require('./routes/image_routers')
 
 //const payment_router = require('./payment_routers.js')
 
@@ -76,6 +77,8 @@ app.use('/register', routesRegister)
 app.use('/api', indexRouter)
 
 app.use('/razon', routesRazones)
+
+app.use('/', routes)
 
 //app.use('/imagen', routesImagen)
 

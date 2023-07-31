@@ -1,14 +1,12 @@
-const express = require('express')
-const routes = express.Router()
-const multer  = require('multer')
+const express = require('express');
+const routes = express.Router();
 
-routes.post('/', upload.single('imagen'), (req, res) =>{
-    req.getConnection((err, conn) => {
-        if(err) return res.send(err)
-        const imagen = req.file
+const imagesController = require("../controllers/imagesController");
 
-        console.log(imagen)
+routes.post(
+  "/images/:tabla",
+  imagesController.upload,
+  imagesController.uploadFile
+);
 
-        res.send("Hola mundo si sirvio la imgen")
-    })
-})
+module.exports = routes;
