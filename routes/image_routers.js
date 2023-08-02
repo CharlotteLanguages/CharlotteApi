@@ -1,5 +1,10 @@
 const express = require('express');
+const multer = require('multer')({
+  dest: 'public/files'
+})
 const routes = express.Router();
+const fs = require('fs')
+const path = require('path')
 
 const imagesController = require("../controllers/imagesController");
 
@@ -9,7 +14,7 @@ routes.post(
   imagesController.uploadFile
 );
 
-routes.get('/images', (req, res) =>{
+routes.get('/', (req, res) =>{
   req.getConnection((err, conn)=>{
       if(err) return res.send(err)
       conn.query('SELECT * FROM IMAGEN', (err, rows)=>{
@@ -19,4 +24,4 @@ routes.get('/images', (req, res) =>{
   })
 })
 
-module.exports = routes;
+module.exports =routes;

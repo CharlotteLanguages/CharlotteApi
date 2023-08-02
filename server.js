@@ -31,7 +31,8 @@ const routesRegister = require('./routes/register_routers')
 
 const routesRazones = require('./routes/razones_routers')
 
-//const routesImagen = require('./routes/image_routers')
+const routesImagen = require('./routes/image_routers')
+
 
 const app = express()
 app.use(express.json())
@@ -80,7 +81,9 @@ app.use('/razon', routesRazones)
 
 app.use('/', routes)
 
-//app.use('/imagen', routesImagen)
+app.use('/imagenes', routesImagen)
+
+app.use('/public', express.static(`${__dirname}/images`))
 
 /*app.use('/payment', payment_router)*/
 
