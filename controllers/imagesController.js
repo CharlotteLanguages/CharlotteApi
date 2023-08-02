@@ -10,6 +10,8 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
+const host = 'https://apicharlotte.up.railway.app/'
+const port = 5905
 const localhost = 'http://localhost'
 
 exports.upload = upload.single("image");
@@ -24,7 +26,7 @@ exports.uploadFile = (req, res) => {
     /*const data = fs.readFileSync(
       path.join(__dirname, "../../images/" + req.file.filename)
     );*/
-    const data = `${process.env.HOST || localhost }:${process.env.PORT || 3000}/public/${nombre}`
+    const data = `${host }public/${nombre}`
 
     conn.query(
       "INSERT INTO " + req.params.tabla + " set ?",
