@@ -4,7 +4,7 @@ const routes = express.Router()
 routes.get('/', (req, res) =>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('SELECT * FROM ACTIVIDADES', (err, rows)=>{
+        conn.query('SELECT * FROM ACTIVIDADES inner join CURSOS on ACTIVIDADES.FK_CURSO = CURSOS.idCurso', (err, rows)=>{
                     if(err) return res.send(err)
                     res.json(rows)
                 })
@@ -14,7 +14,7 @@ routes.get('/', (req, res) =>{
 routes.get('/:id', (req, res) =>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('SELECT * FROM ACTIVIDADES WHERE idActividad = ?', [req.params.id],(err, rows)=>{
+        conn.query('SELECT * FROM ACTIVIDADES WHERE idActividades = ?', [req.params.id],(err, rows)=>{
                     if(err) return res.send(err)
                     res.json(rows)
                 })
@@ -34,7 +34,7 @@ routes.post('/', (req, res) =>{
 routes.delete('/:id', (req, res) =>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('DELETE FROM ACTIVIDADES WHERE idActividad = ?', [req.params.id], (err, rows)=>{
+        conn.query('DELETE FROM ACTIVIDADES WHERE idActividades = ?', [req.params.id], (err, rows)=>{
                     if(err) return res.send(err)
                     res.json(rows)
                 })
@@ -44,7 +44,7 @@ routes.delete('/:id', (req, res) =>{
 routes.put('/:id', (req, res) =>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('UPDATE ACTIVIDADES set ? WHERE idActividad = ?', [req.body, req.params.id], (err, rows)=>{
+        conn.query('UPDATE ACTIVIDADES set ? WHERE idActividades = ?', [req.body, req.params.id], (err, rows)=>{
                     if(err) return res.send(err)
                     res.json(rows)
                 })

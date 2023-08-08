@@ -23,9 +23,6 @@ exports.uploadFile = (req, res) => {
 
     const tipo = req.file.mimetype;
     const nombre = req.file.originalname;
-    /*const data = fs.readFileSync(
-      path.join(__dirname, "../../images/" + req.file.filename)
-    );*/
     const data = `${host }public/${nombre}`
 
     conn.query(

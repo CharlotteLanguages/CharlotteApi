@@ -14,6 +14,8 @@ const bodyParser = require('body-parser');
 const indexRouter = require('./router.js');
 //--------
 
+const routesRoles = require('./routes/role_routers')
+
 const routesMembership = require('./routes/membership_routes')
 const routesStudent = require('./routes/student_routes')
 const routesNews = require('./routes/news_routes')
@@ -84,6 +86,8 @@ app.use('/', routes)
 app.use('/imagenes', routesImagen)
 
 app.use('/public', express.static(`${__dirname}/images`))
+
+app.use('/roles', routesRoles)
 
 /*app.use('/payment', payment_router)*/
 
