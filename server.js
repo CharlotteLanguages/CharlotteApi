@@ -1,5 +1,6 @@
 const express = require('express')
 const mysql = require('mysql2')
+const fs = require('fs')
 const myconn = require('express-myconnection')
 const cors = require('cors')
 const routes = require('./routes/image_routers')
@@ -7,9 +8,6 @@ const routes = require('./routes/image_routers')
 //const payment_router = require('./payment_routers.js')
 
 //--------news
-var db  = require('./dbConnection');
-const createError = require('http-errors');
-const path = require('path');
 const bodyParser = require('body-parser');
 const indexRouter = require('./router.js');
 //--------
