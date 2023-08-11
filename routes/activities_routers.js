@@ -4,7 +4,7 @@ const routes = express.Router()
 routes.get('/', (req, res) =>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('SELECT * FROM ACTIVIDADES inner join CURSOS on ACTIVIDADES.FK_CURSO = CURSOS.idCurso', (err, rows)=>{
+        conn.query('SELECT ACTIVIDADES.nombre, ACTIVIDADES.categoria, ACTIVIDADES.tag, ACTIVIDADES.detalles, ACTIVIDADES.level, CURSOS.titulo as Curso, CURSOS.precio FROM ACTIVIDADES inner join CURSOS on ACTIVIDADES.fk_curso = CURSOS.idCurso', (err, rows)=>{
                     if(err) return res.send(err)
                     res.json(rows)
                 })
