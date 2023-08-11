@@ -4,6 +4,7 @@ const fs = require('fs')
 const myconn = require('express-myconnection')
 const cors = require('cors')
 const routes = require('./routes/image_routers')
+const bcrypt = require('bcrypt');
 
 //const payment_router = require('./payment_routers.js')
 
@@ -53,6 +54,8 @@ const dbOptions = {
 app.use(myconn(mysql, dbOptions, 'single'))
 app.use(express.json())
 app.use(cors())
+
+app.use(express.urlencoded({ extended: false }));
 //const upload = multer({ dest: 'uploads/' })
 
 //------------------------ Routes ------------------------
