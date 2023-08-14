@@ -90,6 +90,8 @@ app.use('/public', express.static(`${__dirname}/images`))
 
 app.use('/roles', routesRoles)
 
+app.use('/', express.static(`${__dirname}/imagen`))
+
 /*app.use('/payment', payment_router)*/
 
 //------------------------ Server running ------------------------
