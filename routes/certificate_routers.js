@@ -72,3 +72,38 @@ routes.put('/:id', (req, res) =>{
 })
 
 module.exports =routes;
+
+/*const { name, lastName, birthDate, gender, email, userName, password, detail, idMembership_fk, idRol_fk, razon } = req.body;
+    const nombre = req.file.originalname;
+    //const imagen = `${host }public/${nombre}`
+    const imagen = req.file.path;
+
+    try {
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const sql = 'INSERT INTO PERSON (name, lastName, birthDate, gender, email, userName, password, detail, idMembership_fk, idRol_fk, razon, imagen) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)';
+        
+        db.query(sql, [name, lastName, birthDate, gender, email, userName, hashedPassword, detail, idMembership_fk, idRol_fk, razon, imagen], (err, result) => {
+        if (err) throw err;
+        res.send('Usuario registrado correctamente.');
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error al registrar el usuario.');
+    }*/
+
+    /*
+    if(!req.file) {
+        return res.status(400).send('No ha cargado ninguna imagen');
+    }
+
+    const { name, lastName, birthDate, gender, email, userName, password, detail, idMembership_fk, idRol_fk, razon } = req.body;
+    const imageUrl = req.file.path;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const sql = 'INSERT INTO PERSON (name, lastName, birthDate, gender, email, userName, password, detail, idMembership_fk, idRol_fk, razon, imagen) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)';
+
+    db.query(sql, [name, lastName, birthDate, gender, email, userName, hashedPassword, detail, idMembership_fk, idRol_fk, razon, imageUrl], (err, result) => {
+        if (err)  throw err;
+        console.log('Imagen subido y registrada en la base de datos');
+        res.send('Imagen subida y registrada en la base de datos')
+    });
+    */

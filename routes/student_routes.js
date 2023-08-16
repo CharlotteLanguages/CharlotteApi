@@ -8,8 +8,14 @@ const path = require('path')
 
 const storage = multer.diskStorage({
     destination: path.join(__dirname, '../images'),
-    filename: (req, file, cb) => {
+    /*destination: (req, file, cb) => {
+        cb(null, 'images/');
+    },*/
+    filename: function (req, file, cb) {
         cb(null, `${file.filename}_${Date.now}${path.extname(file.originalname)}`);
+        //const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        //cb(null, uniqueSuffix + path.extname(file.originalname));
+        //cb(null, `${Date.now()}-${file.originalname}`);
     } 
 });
 
@@ -39,10 +45,10 @@ routes.get('/', (req, res) =>{
 })
 
 routes.post('/', upload.single("image"), async (req, res) =>{
-
     const { name, lastName, birthDate, gender, email, userName, password, detail, idMembership_fk, idRol_fk, razon } = req.body;
     const nombre = req.file.originalname;
     const imagen = `${host }public/${nombre}`
+    //const imagen = req.file.path;
 
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -56,7 +62,7 @@ routes.post('/', upload.single("image"), async (req, res) =>{
         console.error(err);
         res.status(500).send('Error al registrar el usuario.');
     }
-    })
+})
 
 routes.delete('/:id', (req, res) =>{
     req.getConnection((err, conn)=>{
