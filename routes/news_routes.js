@@ -43,7 +43,7 @@ routes.post('/', upload.single('image'), async (req, res) =>{
         const sql = 'INSERT INTO NEWS (title, description, category, tags, image, detalles, razon) VALUES (?, ?, ?, ?, ?, ?, ?)';
         db.query(sql, [title, description, category, tags, image, detalles, razon], (err, result) =>{
             if(err) throw err;
-            res.send('Imagen cargada con exito');
+            res.send('Imagen cargada con exito.');
         })
     } catch(err) {
         console.error(err)

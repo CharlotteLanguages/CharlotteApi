@@ -9,7 +9,7 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     //cb(null, `${Date.now()}-${file.originalname}`);
-    cb(null, Date.now() + '-' + file.originalname);
+    cb(null,file.originalname);
   } 
 });
 
@@ -27,8 +27,8 @@ exports.uploadFile = (req, res) => {
 
     const tipo = req.file.mimetype;
     const nombre = req.file.originalname;
-    //const data = `${host }public/${nombre}`
-    const data = req.file.path;
+    const data = `${host }newimagenes/nombre/${nombre}`
+   // const data = req.file.path;
 
     conn.query(
       "INSERT INTO " + req.params.tabla + " set ?",
