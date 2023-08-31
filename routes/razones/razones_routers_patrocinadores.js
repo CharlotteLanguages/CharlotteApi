@@ -4,7 +4,7 @@ const routes = express.Router()
 routes.get('/', (req, res) => {
     req.getConnection((err, conn) => {
         if(err) return res.send(err)
-        conn.query('SELECT * FROM razon', (err, rows) => {
+        conn.query('SELECT * FROM razonPatrocinador', (err, rows) => {
             if(err) return res.send(err)
             res.json(rows)
         })
@@ -14,7 +14,7 @@ routes.get('/', (req, res) => {
 routes.get('/:id', (req, res) => {
     req.getConnection((err, conn) => {
         if(err) return res.send(err)
-        conn.query('SELECT * FROM razon WHERE idRazon = ?' [req.params.id],(err, rows) => {
+        conn.query('SELECT * FROM razonPatrocinador WHERE idPatrocinador = ?' [req.params.id],(err, rows) => {
             if(err) return res.send(err)
             res.json(rows)
         })
@@ -24,7 +24,7 @@ routes.get('/:id', (req, res) => {
 routes.post('/', (req, res) => {
     req.getConnection((err, conn) => {
         if(err) return res.send(err)
-        conn.query('INSERT INTO razon set ?', [req.body], (err, rows) => {
+        conn.query('INSERT INTO razonPatrocinador set ?', [req.body], (err, rows) => {
             if(err) return res.send(err)
             res.json(rows)
         })

@@ -30,7 +30,16 @@ const routesResenas = require('./routes/reviews_routers')
 const routesRol = require('./routes/rol_routers')
 const routesRegister = require('./routes/register_routers')
 
-const routesRazones = require('./routes/razones_routers')
+//--------Razones
+const routesRazonesPersona = require('./routes/razones/razones_routers_persona')
+const routesRazonesActividades = require('./routes/razones/razones_routers_actividades')
+const routesRazonesCertificados = require('./routes/razones/razones_routers_certificados')
+const routesRazonesClassPersonalizadas = require('./routes/razones/razones_routers_classPer')
+const routesRazonesCursos = require('./routes/razones/razones_routers_cursos')
+const routesRazonesMembership = require('./routes/razones/razones_routers_membership')
+const routesRazonesNews = require('./routes/razones/razones_routers_news')
+const routesRazonesPatrocinador = require('./routes/razones/razones_routers_patrocinadores')
+const routesRazonesPromociones = require('./routes/razones/razones_routers_promociones')
 
 const routesImagen = require('./routes/image_routers')
 
@@ -54,7 +63,6 @@ const dbOptions = {
 app.use(myconn(mysql, dbOptions, 'single'))
 app.use(express.json())
 app.use(cors())
-
 app.use(express.urlencoded({ extended: false }));
 //const upload = multer({ dest: 'uploads/' })
 
@@ -80,17 +88,26 @@ app.use('/register', routesRegister)
 
 app.use('/api', indexRouter)
 
-app.use('/razon', routesRazones)
+//-----Razones
+app.use('/razonPersona', routesRazonesPersona)
+app.use('/razonActividades', routesRazonesActividades)
+app.use('/razonCertificados', routesRazonesCertificados)
+app.use('/razonClassPer', routesRazonesClassPersonalizadas)
+app.use('/razonCursos', routesRazonesCursos)
+app.use('/razonMembership', routesRazonesMembership)
+app.use('/razonNews', routesRazonesNews)
+app.use('/razonPatrocinador', routesRazonesPatrocinador)
+app.use('/razonPromociones', routesRazonesPromociones)
 
 app.use('/', routes)
 
-app.use('/imagenes', routesImagen)
+//app.use('/imagenes', routesImagen)
 
-app.use('/public', express.static(`${__dirname}/images`))
+//app.use('/public', express.static(`${__dirname}/images`))
 
 app.use('/roles', routesRoles)
 
-app.use('/', express.static(`${__dirname}/imagen`))
+//app.use('/', express.static(`${__dirname}/imagen`))
 
 /*app.use('/payment', payment_router)*/
 

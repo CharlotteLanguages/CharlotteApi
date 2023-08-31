@@ -5,10 +5,18 @@ const multer = require('multer');
 const path = require('path');
 
 const storage = multer.diskStorage({
-    destination: path.join(__dirname, '../images'),
+    /*destination: path.join(__dirname, '../images'),
     filename: (req, file, cb) => {
         cb(null, `${file.filename}_${Date.now}${path.extname(file.originalname)}`);
-    } 
+    }*/
+
+    destination: (req, file, cb) => {
+    cb(null, 'images/');
+  },
+  filename: (req, file, cb) => {
+    //cb(null, `${Date.now()}-${file.originalname}`);
+    cb(null,file.originalname);
+  }  
 });
 
 const upload = multer({ storage: storage });
@@ -47,7 +55,7 @@ routes.post('/', upload.single('image'), async (req, res) =>{
         })
     } catch(err) {
         console.error(err)
-        res.status(500).send('Error al cargar certificado.');
+        res.status(500).send('Error al cargar certificado');
     }
 })
 

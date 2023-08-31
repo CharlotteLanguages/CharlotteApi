@@ -75,14 +75,14 @@ routes.delete('/:id', (req, res) =>{
 
 
 
-routes.put('/:id', upload.single('image'), (req,res) => {
+routes.put('/:idPerson', upload.single('image'), (req,res) => {
     const { name, lastName, birthDate, gender, email, userName, password, detail, idMembership_fk, idRol_fk, razon} = req.body;
 
     const names = req.file.originalname;
     const image = `${host }image/${names}`
     try {
         const sql = 'UPDATE PERSON SET (name, lastName, birthDate, gender, email, userName, password, detail, idMembership_fk, idRol_fk, razon, image) VALUES(?,?,?,?,?,?,?,?,?,?,?,?) WHERE idPerson = ?';
-        db.query(sql, [name, lastName, birthDate, gender, email, userName, password, detail, idMembership_fk, idRol_fk, razon, image, req.params[id]], (err, result) => {
+        db.query(sql, [name, lastName, birthDate, gender, email, userName, password, detail, idMembership_fk, idRol_fk, razon, image, req.params[idPerson]], (err, result) => {
         if (err) throw err;
         res.send('Usuario registrado correctamente.');
         });
@@ -93,3 +93,58 @@ routes.put('/:id', upload.single('image'), (req,res) => {
 })
 
 module.exports =routes;
+
+
+/*
+
+npm WARN config production Use `--omit=dev` instead.
+﻿
+> nodejs-app@1.0.0 start
+﻿
+> nodemon server.js
+﻿
+[nodemon] 2.0.22
+﻿
+[nodemon] to restart at any time, enter `rs`
+﻿
+[nodemon] watching path(s): *.*
+﻿
+[nodemon] watching extensions: js,mjs,json
+﻿
+[nodemon] starting `node server.js`
+﻿
+Example app listening on port 3000
+﻿
+Database is connected successfully !
+﻿
+/app/routes/student_routes.js:49
+﻿
+const nombre = req.file.originalname;
+﻿
+^
+﻿
+TypeError: Cannot read properties of undefined (reading 'originalname')
+﻿
+at /app/routes/student_routes.js:49:29
+﻿
+at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+﻿
+at next (/app/node_modules/express/lib/router/route.js:144:13)
+﻿
+at multerMiddleware (/app/node_modules/multer/lib/make-middleware.js:13:41)
+﻿
+at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+﻿
+at next (/app/node_modules/express/lib/router/route.js:144:13)
+﻿
+at Route.dispatch (/app/node_modules/express/lib/router/route.js:114:3)
+﻿
+at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
+﻿
+at /app/node_modules/express/lib/router/index.js:284:15
+﻿
+at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
+﻿
+[nodemon] app crashed - waiting for file changes before starting...
+
+*/
