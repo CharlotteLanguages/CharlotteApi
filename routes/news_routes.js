@@ -55,7 +55,7 @@ routes.post('/', upload.single('image'), async (req, res) =>{
         })
     } catch(err) {
         console.error(err)
-        res.status(500).send('Error al cargar certificado');
+        res.status(500).send('Error al cargar certificado.');
     }
 })
 
