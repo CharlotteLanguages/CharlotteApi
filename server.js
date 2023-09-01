@@ -40,6 +40,11 @@ const routesRazonesMembership = require('./routes/razones/razones_routers_member
 const routesRazonesNews = require('./routes/razones/razones_routers_news')
 const routesRazonesPatrocinador = require('./routes/razones/razones_routers_patrocinadores')
 const routesRazonesPromociones = require('./routes/razones/razones_routers_promociones')
+const routesRazonesRecursos = require('./routes/razones/razones_routers_recursos')
+const routesRazonesReferidos = require('./routes/razones/razones_routers_referidos')
+const routesRazonesResenas = require('./routes/razones/razones_routers_resenas')
+const routesRazonesRol = require('./routes/razones/razones_routers_rol')
+const routesRazonesSocialNetworks = require('./routes/razones/razones_routers_rol')
 
 const routesImagen = require('./routes/image_routers')
 
@@ -91,13 +96,18 @@ app.use('/api', indexRouter)
 //-----Razones
 app.use('/razonPersona', routesRazonesPersona)
 app.use('/razonActividades', routesRazonesActividades)
-app.use('/razonCertificados', routesRazonesCertificados)
+app.use('/razonCertificado', routesRazonesCertificados)
 app.use('/razonClassPer', routesRazonesClassPersonalizadas)
 app.use('/razonCursos', routesRazonesCursos)
 app.use('/razonMembership', routesRazonesMembership)
 app.use('/razonNews', routesRazonesNews)
 app.use('/razonPatrocinador', routesRazonesPatrocinador)
 app.use('/razonPromociones', routesRazonesPromociones)
+app.use('/razonRecursos', routesRazonesRecursos)
+app.use('/razonReferidos', routesRazonesReferidos)
+app.use('/razonResenas', routesRazonesResenas)
+app.use('/razonRol', routesRazonesRol)
+app.use('/razonesSocialNetworks', routesRazonesSocialNetworks)
 
 app.use('/', routes)
 
