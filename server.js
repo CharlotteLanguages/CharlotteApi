@@ -6,7 +6,7 @@ const cors = require('cors')
 const routes = require('./routes/image_routers')
 const bcrypt = require('bcrypt');
 
-//const payment_router = require('./payment_routers.js')
+////const payment_router = require('./payment_routers.js')
 
 //--------news
 const bodyParser = require('body-parser');
