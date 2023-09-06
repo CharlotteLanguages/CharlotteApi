@@ -3,11 +3,15 @@ const mysql = require('mysql2')
 const fs = require('fs')
 const myconn = require('express-myconnection')
 const cors = require('cors')
-const routes = require('./routes/image_routers')
+
 const bcrypt = require('bcrypt');
 const path = require('path');
 
 ////const payment_router = require('./payment_routers.js')
+
+//-------------
+const routes = require('./routes/image_routers')
+const routesNew = require('./routes/news_routes')
 
 //--------news
 const bodyParser = require('body-parser');
@@ -18,7 +22,7 @@ const routesRoles = require('./routes/role_routers')
 
 const routesMembership = require('./routes/membership_routes')
 const routesStudent = require('./routes/student_routes')
-const routesNews = require('./routes/news_routes')
+//const routesNews = require('./routes/news_routes')
 
 const routesNewsNew = require('./routes/newsNew')
 
@@ -82,7 +86,7 @@ app.get('/', (req, res) =>{
 
 app.use('/membership', routesMembership)
 app.use('/student', routesStudent)
-app.use('/news', routesNews)
+//app.use('/news', routesNews)
 app.use('/course', routesCourses)
 app.use('/activities', routesActivities)
 app.use('/resource', routesResources)
@@ -117,6 +121,7 @@ app.use('/razonRol', routesRazonesRol)
 app.use('/razonesSocialNetworks', routesRazonesSocialNetworks)
 
 app.use('/', routes)
+app.use('/', routesNew)
 
 //app.use('/imagenes', routesImagen)
 

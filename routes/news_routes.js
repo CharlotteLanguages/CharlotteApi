@@ -1,4 +1,4 @@
-const express = require('express');
+/*const express = require('express');
 const routes = express.Router()
 const db = require('../dbConnection');
 const multer = require('multer');
@@ -73,4 +73,38 @@ routes.put('/:id', (req, res) =>{
     })
 })
 
-module.exports =routes;
+module.exports =routes;*/
+
+const express = require('express');
+const routes = express.Router();
+const db = require('../dbConnection');
+
+const imagesController = require("../controllers/newsController");
+
+routes.post(
+  "/:tabla",
+  imagesController.upload,
+  imagesController.uploadFile
+);
+
+routes.get('/news', (req, res) =>{
+  const sql = 'SELECT idNews, title, description, category, tags, image, nameImage, tipo, detalles FROM NEWS'
+  db.query(sql, (err, results) => {
+    if (err) {
+      console.error('Error al consultar la base de datos:', err);
+      res.status(500).json({ message: 'Error interno del servidor' });
+    } else {
+      // Modifica el resultado para incluir la URL de la imagen
+      const data = results.map(result => {
+        return {
+          nombre: result.nombre,
+          tipo: result.tipo,
+          imagen_url: result.imagen_url // URL de la imagen
+        };
+      });
+      res.json(data);
+    }
+  });
+})
+
+module.exports = routes;
