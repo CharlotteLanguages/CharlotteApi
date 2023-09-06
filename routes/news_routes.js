@@ -7,7 +7,7 @@ const path = require('path');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-routes.get('/', (req, res) =>{
+routes.get('/news', (req, res) =>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
         conn.query('SELECT idNews, title, description, category, tags, image, nameImage, tipo, detalles FROM NEWS', (err, rows)=>{
