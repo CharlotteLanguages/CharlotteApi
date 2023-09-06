@@ -4,28 +4,13 @@ const db = require('../dbConnection');
 const multer = require('multer');
 const path = require('path');
 
-const storage = multer.diskStorage({
-    /*destination: path.join(__dirname, '../images'),
-    filename: (req, file, cb) => {
-        cb(null, `${file.filename}_${Date.now}${path.extname(file.originalname)}`);
-    }*/
-
-    destination: (req, file, cb) => {
-    cb(null, 'images/');
-  },
-  filename: (req, file, cb) => {
-    //cb(null, `${Date.now()}-${file.originalname}`);
-    cb(null,file.originalname);
-  }  
-});
-
+const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
-const host = 'https://apicharlotte.up.railway.app/'
 
 routes.get('/', (req, res) =>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('SELECT * FROM NEWS', (err, rows)=>{
+        conn.query('SELECT idNews, title, description, category, tags, image, detalles FROM NEWS', (err, rows)=>{
                     if(err) return res.send(err)
                     res.json(rows)
                 })
@@ -35,7 +20,7 @@ routes.get('/', (req, res) =>{
 routes.get('/:id', (req, res) =>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('SELECT * FROM NEWS WHERE idNews = ?', [req.params.id],(err, rows)=>{
+        conn.query('SELECT idNews, title, description, category, tags, image, detalles FROM NEWS WHERE idNews = ?', [req.params.id],(err, rows)=>{
                     if(err) return res.send(err)
                     res.json(rows)
                 })
@@ -43,21 +28,38 @@ routes.get('/:id', (req, res) =>{
 })
 
 routes.post('/', upload.single('image'), async (req, res) =>{
-    const { title, description, category, tags, detalles } = req.body;
-    const name = req.file.originalname;
-    const imagen = `${host }image/${name}`
-    const image = `https://apicharlotte.up.railway.app/images/${name}`
+    const { originalname, buffer, title, description, category, tags, detalles } = req.file;
+    const nameImage = originalname;
+    const imagenBuffer = buffer
+    const image = `https://apicharlotte.up.railway.app/images/${nameImage}`
 
-    try {
-        const sql = 'INSERT INTO NEWS (title, description, category, tags, image, detalles) VALUES (?, ?, ?, ?, ?, ?)';
-        db.query(sql, [title, description, category, tags, image, detalles], (err, result) =>{
+    /*try {
+        const sql = 'INSERT INTO NEWS title, description, category, tags, image, detalles, nameImage, imagenBuffer VALUES (?,?,?,?,?,?,?,?)';
+        db.query(sql, [title, description, category, tags, image, detalles, nameImage, imagenBuffer], (err, result) =>{
             if(err) throw err;
             res.send('Imagen cargada con exito.');
         })
     } catch(err) {
         console.error(err)
         res.status(500).send('Error al cargar certificado.');
-    }
+    }*/
+
+    db.query(
+        "INSERT INTO NEWS set ?",
+        [{ title, description, category, tags, image, detalles, nameImage, imagenBuffer  }],
+        (err, rows) => {
+          console.log(
+            err
+              ? "Err INSERT INTO " + req.params.tabla + " " + err
+              : req.params.tabla + ": Image added!"
+          );
+          res.json(
+            err
+              ? { err: "Error al cargar la imagen" }
+              : { msg: "Imagen cargada satisfactoriamente." }
+          );
+        }
+      );
 })
 
 routes.delete('/:id', (req, res) =>{

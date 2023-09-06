@@ -15,10 +15,6 @@ const upload = multer({ storage: storage });
     const name = originalname
     const imagen = buffer
     const urlImagen = `https://apicharlotte.up.railway.app/images/${name}`
-    
-    //const imagen = req.file ? req.file.buffer.toString('base64') : null;
-    //const imagen = req.file ? `/imagenes/${req.file.originalname}` : null; // Ruta de la imagen
-
 
     try {
         const sql = 'INSERT INTO persones (nombre, apellido, direccion, telefono, imagen, urlImagen) VALUES (?, ?, ?, ?, ?, ?)';
