@@ -28,22 +28,12 @@ routes.get('/:id', (req, res) =>{
 })
 
 routes.post('/', upload.single('image'), async (req, res) =>{
-    const { originalname, buffer, title, description, category, tags, detalles, mimetype } = req.file;
+    const { originalname, buffer, mimetype } = req.file;
+    const { title, description, category, tags, detalles } = req.body;
     const nameImage = originalname;
     const imagenBuffer = buffer
     const tipo = mimetype
     const image = `https://apicharlotte.up.railway.app/images/${nameImage}`
-
-    /*try {
-        const sql = 'INSERT INTO NEWS title, description, category, tags, image, detalles, nameImage, imagenBuffer VALUES (?,?,?,?,?,?,?,?)';
-        db.query(sql, [title, description, category, tags, image, detalles, nameImage, imagenBuffer], (err, result) =>{
-            if(err) throw err;
-            res.send('Imagen cargada con exito.');
-        })
-    } catch(err) {
-        console.error(err)
-        res.status(500).send('Error al cargar certificado.');
-    }*/
 
     db.query(
         "INSERT INTO NEWS set ?",
