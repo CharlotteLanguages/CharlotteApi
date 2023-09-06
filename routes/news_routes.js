@@ -28,9 +28,10 @@ routes.get('/:id', (req, res) =>{
 })
 
 routes.post('/', upload.single('image'), async (req, res) =>{
-    const { originalname, buffer, title, description, category, tags, detalles } = req.file;
+    const { originalname, buffer, title, description, category, tags, detalles, mimetype } = req.file;
     const nameImage = originalname;
     const imagenBuffer = buffer
+    const tipo = mimetype
     const image = `https://apicharlotte.up.railway.app/images/${nameImage}`
 
     /*try {
@@ -46,7 +47,7 @@ routes.post('/', upload.single('image'), async (req, res) =>{
 
     db.query(
         "INSERT INTO NEWS set ?",
-        [{ title, description, category, tags, image, detalles, nameImage, imagenBuffer  }],
+        [{ title, description, category, tags, image, detalles, nameImage, imagenBuffer, tipo  }],
         (err, rows) => {
           console.log(
             err
