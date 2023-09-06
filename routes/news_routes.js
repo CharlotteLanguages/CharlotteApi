@@ -10,7 +10,7 @@ const upload = multer({ storage: storage });
 routes.get('/', (req, res) =>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('SELECT idNews, title, description, category, tags, image, detalles FROM NEWS', (err, rows)=>{
+        conn.query('SELECT idNews, title, description, category, tags, image, nameImage, tipo, detalles FROM NEWS', (err, rows)=>{
                     if(err) return res.send(err)
                     res.json(rows)
                 })
@@ -20,7 +20,7 @@ routes.get('/', (req, res) =>{
 routes.get('/:id', (req, res) =>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('SELECT idNews, title, description, category, tags, image, detalles FROM NEWS WHERE idNews = ?', [req.params.id],(err, rows)=>{
+        conn.query('SELECT * FROM NEWS WHERE idNews = ?', [req.params.id],(err, rows)=>{
                     if(err) return res.send(err)
                     res.json(rows)
                 })
