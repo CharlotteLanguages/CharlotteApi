@@ -128,6 +128,8 @@ app.use('/roles', routesRoles)
 
 /*app.use('/payment', payment_router)*/
 
+//app.use('/', routesImagenes)
+
 //------------------------ Server running ------------------------
 app.listen(app.get('port'), () => {
     console.log('Example app listening on port',  app.get('port'))

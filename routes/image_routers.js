@@ -59,15 +59,15 @@ routes.get('/images', (req, res) =>{
   });
 })
 
-routes.get('/images/:id', (req, res) => {
-  const id = req.params.id;
-  const sql = 'SELECT nombre, imagen, tipo FROM imagenesPrueba WHERE id = ?';
+routes.get('/images/:nombre', (req, res) => {
+  const id = req.params.nombre;
+  const sql = 'SELECT nombre, imagen, tipo FROM imagenesPrueba WHERE nombre = ?';
   db.query(sql, [id], (err, result) => {
     if (err) {
       return res.status(500).send(err);
     }
     if (result.length === 0) {
-      return res.status(404).send('Archivo no encontrada.');
+      return res.status(404).send('Archivssso no encontrada.');
     }
     const { nombre, tipo, imagen } = result[0];
     
