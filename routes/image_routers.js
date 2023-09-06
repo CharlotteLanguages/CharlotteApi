@@ -39,18 +39,40 @@ routes.post(
   imagesController.uploadFile
 );
 
+routes.get('/images', (req, res) =>{
+  const sql = 'SELECT nombre, tipo, imagen as imagen_url FROM imagenesPrueba'
+  db.query(sql, (err, results) => {
+    if (err) {
+      console.error('Error al consultar la base de datos:', err);
+      res.status(500).json({ message: 'Error interno del servidor' });
+    } else {
+      // Modifica el resultado para incluir la URL de la imagen
+      const data = results.map(result => {
+        return {
+          nombre: result.nombre,
+          tipo: result.tipo,
+          imagen_url: result.imagen_url // URL de la imagen
+        };
+      });
+      res.json(data);
+    }
+  });
+})
+
 routes.get('/images/:id', (req, res) => {
   const id = req.params.id;
-  const sql = 'SELECT nombre, imagen FROM imagenesPrueba WHERE id = ?';
+  const sql = 'SELECT nombre, imagen, tipo FROM imagenesPrueba WHERE id = ?';
   db.query(sql, [id], (err, result) => {
     if (err) {
       return res.status(500).send(err);
     }
     if (result.length === 0) {
-      return res.status(404).send('Imagen no encontrada.');
+      return res.status(404).send('Archivo no encontrada.');
     }
-    const { nombre, imagen } = result[0];
-    res.setHeader('Content-Type', 'image/jpeg'); // Ajusta el tipo de contenido según tu tipo de imagen
+    const { nombre, tipo, imagen } = result[0];
+    
+    res.setHeader('Content-Type', tipo);
+
     res.send(imagen);
   });
 });

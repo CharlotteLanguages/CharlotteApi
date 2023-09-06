@@ -1,39 +1,9 @@
-/*const multer = require('multer');
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
-
-app.post('/subirimagen', upload.single('imagen'), (req, res) => {
-  const { originalname, buffer } = req.file;
-  const nombre = originalname;
-  const imagen = buffer;
-
-  const sql = 'INSERT INTO imagenes (nombre, imagen) VALUES (?, ?)';
-  db.query(sql, [nombre, imagen], (err, result) => {
-    if (err) {
-      return res.status(500).send(err);
-    }
-    res.send('Imagen subida con éxito.');
-  });
-});
-*/
-
-
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
-/*const storage = multer.diskStorage({
-  destination: path.join(__dirname, '../images'),
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}-${file.originalname}`);
-  },
-});*/
-
 const storage = multer.memoryStorage();
-
 const upload = multer({ storage: storage });
-const host = 'https://apicharlotte.up.railway.app/'
-const port = 5905
 
 exports.upload = upload.single("image");
 
@@ -41,16 +11,14 @@ exports.uploadFile = (req, res) => {
   req.getConnection((err, conn) => {
     if (err) return res.send(err);
 
-    //const tipo = req.file.mimetype;
-    const {originalname, buffer} = req.file;
-    //const nombre = req.file.originalname;
+    const {originalname, buffer, mimetype} = req.file;
     const nombre = originalname;
-    //const data = `${host }public/${nombre}`
     const imagen = buffer;
+    const tipo = mimetype;
 
     conn.query(
       "INSERT INTO " + req.params.tabla + " set ?",
-      [{ nombre, imagen }],
+      [{ nombre, imagen, tipo  }],
       (err, rows) => {
         console.log(
           err

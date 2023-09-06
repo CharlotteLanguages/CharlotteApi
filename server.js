@@ -5,6 +5,7 @@ const myconn = require('express-myconnection')
 const cors = require('cors')
 const routes = require('./routes/image_routers')
 const bcrypt = require('bcrypt');
+const path = require('path');
 
 ////const payment_router = require('./payment_routers.js')
 
@@ -18,6 +19,9 @@ const routesRoles = require('./routes/role_routers')
 const routesMembership = require('./routes/membership_routes')
 const routesStudent = require('./routes/student_routes')
 const routesNews = require('./routes/news_routes')
+
+const routesNewsNew = require('./routes/newsNew')
+
 const routesCourses = require('./routes/courses_routers')
 const routesActivities = require('./routes/activities_routers')
 const routesResources = require('./routes/resource_routers')
@@ -46,7 +50,7 @@ const routesRazonesResenas = require('./routes/razones/razones_routers_resenas')
 const routesRazonesRol = require('./routes/razones/razones_routers_rol')
 const routesRazonesSocialNetworks = require('./routes/razones/razones_routers_rol')
 
-const routesImagen = require('./routes/image_routers')
+//const routesImagen = require('./routes/image_routers')
 
 
 const app = express()
@@ -92,6 +96,9 @@ app.use('/rol', routesRol )
 app.use('/register', routesRegister)
 
 app.use('/api', indexRouter)
+
+app.use('/registroPersona', routesNewsNew)
+//app.use('/registroPersona', express.static(path.join(__dirname, 'imagenes')));
 
 //-----Razones
 app.use('/razonPersona', routesRazonesPersona)

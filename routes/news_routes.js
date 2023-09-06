@@ -43,13 +43,14 @@ routes.get('/:id', (req, res) =>{
 })
 
 routes.post('/', upload.single('image'), async (req, res) =>{
-    const { title, description, category, tags, detalles, razon } = req.body;
+    const { title, description, category, tags, detalles } = req.body;
     const name = req.file.originalname;
-    const image = `${host }image/${name}`
+    const imagen = `${host }image/${name}`
+    const image = `https://apicharlotte.up.railway.app/images/${name}`
 
     try {
-        const sql = 'INSERT INTO NEWS (title, description, category, tags, image, detalles, razon) VALUES (?, ?, ?, ?, ?, ?, ?)';
-        db.query(sql, [title, description, category, tags, image, detalles, razon], (err, result) =>{
+        const sql = 'INSERT INTO NEWS (title, description, category, tags, image, detalles) VALUES (?, ?, ?, ?, ?, ?)';
+        db.query(sql, [title, description, category, tags, image, detalles], (err, result) =>{
             if(err) throw err;
             res.send('Imagen cargada con exito.');
         })
