@@ -1,8 +1,9 @@
-const express = require('express');
-const routes = express.Router()
-const db = require('../dbConnection');
+//const express = require('express');
+//const routes = express.Router()
+//const db = require('../dbConnection');
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs')
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -21,14 +22,14 @@ exports.uploadFile = (req, res) => {
     const image = `https://apicharlotte.up.railway.app/images/${nameImage}`
 
 
-    db.query(
-        "INSERT INTO NEWS set ?",
+    conn.query(
+        "INSERT INTO " + req.params.tabla + " set ?",
         [{ title, description, category, tags, image, detalles, nameImage, imagenBuffer, tipo  }],
         (err, rows) => {
           console.log(
             err
               ? "Err INSERT INTO " + req.params.tabla + " " + err
-              : req.params.tabla + ": Image added!"
+              : req.params.tabla + ": New add"
           );
           res.json(
             err
