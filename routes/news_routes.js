@@ -40,9 +40,9 @@ routes.get('/news', (req, res) => {
   })
 })
 
-routes.get('/newImage/:nameImage', (req, res) => {
+routes.get('/news/:nameImage', (req, res) => {
   const id = req.params.nameImage;
-  const sql = 'SELECT title, description, category, tags, image, detalles, nameImage where nameImage = ?';
+  const sql = 'SELECT title, description, category, tags, image as imagen_url, nameImage, tipo, detalles FROM NEWS where nameImage = ?';
 
   db.query(sql, [id], (err, result) => {
     if(err) {
@@ -51,9 +51,9 @@ routes.get('/newImage/:nameImage', (req, res) => {
     if (result.length === 0) {
       return res.status(404).send('Archivo no encontrado.');
     }
-    const { nameImage } = result[0];
+    const { imagenBuffer } = result[0];
 
-    res.send(nameImage);
+    res.send(imagenBuffer);
   })
 }) 
 
