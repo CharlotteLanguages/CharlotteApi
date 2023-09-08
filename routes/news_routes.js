@@ -5,30 +5,10 @@ const db = require('../dbConnection');
 const imagesController = require("../controllers/newsController");
 
 routes.post(
-  "/newImage/:tabla",
+  "/new/:tabla",
   imagesController.upload,
   imagesController.uploadFile
 );
-
-/*routes.get('/news', (req, res) =>{
-  const sql = 'SELECT idNews, title, description, category, tags, image as imagen_url, nameImage, tipo, detalles FROM NEWS'
-  db.query(sql, (err, results) => {
-    if (err) {
-      console.error('Error al consultar la base de datos:', err);
-      res.status(500).json({ message: 'Error interno del servidor' });
-    } else {
-      // Modifica el resultado para incluir la URL de la imagen
-      const data = results.map(result => {
-        return {
-          nombre: result.nombre,
-          tipo: result.tipo,
-          imagen_url: result.imagen_url // URL de la imagen
-        };
-      });
-      res.json(data);
-    }
-  });
-})*/
 
 routes.get('/news', (req, res) => {
   req.getConnection((err, conn) => {
@@ -42,7 +22,7 @@ routes.get('/news', (req, res) => {
 
 routes.get('/news/:nameImage', (req, res) => {
   const id = req.params.nameImage;
-  const sql = 'SELECT title, description, category, tags, image as imagen_url, nameImage, tipo, detalles FROM NEWS where nameImage = ?';
+  const sql = 'SELECT nameImage, tipo, imagenBuffer FROM NEWS where nameImage = ?';
 
   db.query(sql, [id], (err, result) => {
     if(err) {
@@ -51,7 +31,9 @@ routes.get('/news/:nameImage', (req, res) => {
     if (result.length === 0) {
       return res.status(404).send('Archivo no encontrado.');
     }
-    const { imagenBuffer } = result[0];
+    const { tipo, imagenBuffer } = result[0];
+
+    res.setHeader('Content-Type', tipo);
 
     res.send(imagenBuffer);
   })

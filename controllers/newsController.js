@@ -19,7 +19,7 @@ exports.uploadFile = (req, res) => {
     const nameImage = originalname;
     const imagenBuffer = buffer
     const tipo = mimetype
-    const image = `https://apicharlotte.up.railway.app/newImage/${nameImage}`
+    const image = `https://apicharlotte.up.railway.app/news/${nameImage}`
 
 
     conn.query(
@@ -33,8 +33,8 @@ exports.uploadFile = (req, res) => {
           );
           res.json(
             err
-              ? { err: "Error al cargar la imagen" }
-              : { msg: "Imagen cargada satisfactoriamente." }
+              ? { err: "Error al cargar la noticia" }
+              : { msg: "Noticia cargada con exito." }
           );
         }
       );
