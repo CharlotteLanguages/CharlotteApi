@@ -19,7 +19,7 @@ exports.uploadFile = (req, res) => {
     const nameImage = originalname;
     const imagenBuffer = buffer
     const tipo = mimetype
-    const image = `https://apicharlotte.up.railway.app/images/${nameImage}`
+    const image = `https://apicharlotte.up.railway.app/newImage/${nameImage}`
 
 
     conn.query(

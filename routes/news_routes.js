@@ -10,7 +10,7 @@ routes.post(
   imagesController.uploadFile
 );
 
-routes.get('/newImage', (req, res) =>{
+/*routes.get('/news', (req, res) =>{
   const sql = 'SELECT idNews, title, description, category, tags, image as imagen_url, nameImage, tipo, detalles FROM NEWS'
   db.query(sql, (err, results) => {
     if (err) {
@@ -28,6 +28,16 @@ routes.get('/newImage', (req, res) =>{
       res.json(data);
     }
   });
+})*/
+
+routes.get('/news', (req, res) => {
+  req.getConnection((err, conn) => {
+    if (err) return res.send(err)
+    conn.query('SELECT idNews, title, description, category, tags, image as imagen_url, nameImage, tipo, detalles FROM NEWS', (err, rows) => {
+      if (err) return res.send(err)
+      res.json(rows)
+    })
+  })
 })
 
 routes.get('/newImage/:nameImage', (req, res) => {
