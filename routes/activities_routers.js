@@ -1,5 +1,8 @@
 const express = require('express');
 const routes = express.Router()
+const db = require('../dbConnection');
+
+const imagesController = require("../controllers/activitiesController");
 
 routes.get('/', (req, res) =>{
     req.getConnection((err, conn)=>{

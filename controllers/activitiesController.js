@@ -12,16 +12,16 @@ exports.uploadFile = (req, res) => {
     if (err) return res.send(err);
 
     const { originalname, buffer, mimetype } = req.file;
-    const { title, description, category, tags, detalles } = req.body;
+    const { nombre, tipo, categoria } = req.body;
     const nameImage = originalname;
-    const imagenBuffer = buffer
-    const tipo = mimetype
+    const imageBuffer = buffer
+    const tipoImagen = mimetype
     const image = `https://apicharlotte.up.railway.app/news/${nameImage}`
 
 
     conn.query(
         "INSERT INTO " + req.params.tabla + " set ?",
-        [{ title, description, category, tags, image, detalles, nameImage, imagenBuffer, tipo  }],
+        [{ nombre, tipo, categoria, image, nameImage, tipoImagen, imageBuffer}],
         (err, rows) => {
           console.log(
             err

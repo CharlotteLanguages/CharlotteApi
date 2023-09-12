@@ -54,9 +54,6 @@ const routesRazonesResenas = require('./routes/razones/razones_routers_resenas')
 const routesRazonesRol = require('./routes/razones/razones_routers_rol')
 const routesRazonesSocialNetworks = require('./routes/razones/razones_routers_rol')
 
-//const routesImagen = require('./routes/image_routers')
-
-
 const app = express()
 app.use(express.json())
 app.use(bodyParser.json())
@@ -77,7 +74,6 @@ app.use(myconn(mysql, dbOptions, 'single'))
 app.use(express.json())
 app.use(cors())
 app.use(express.urlencoded({ extended: false }));
-//const upload = multer({ dest: 'uploads/' })
 
 //------------------------ Routes ------------------------
 app.get('/', (req, res) =>{
@@ -86,7 +82,6 @@ app.get('/', (req, res) =>{
 
 app.use('/membership', routesMembership)
 app.use('/student', routesStudent)
-//app.use('/news', routesNews)
 app.use('/course', routesCourses)
 app.use('/activities', routesActivities)
 app.use('/resource', routesResources)
@@ -102,7 +97,6 @@ app.use('/register', routesRegister)
 app.use('/api', indexRouter)
 
 app.use('/registroPersona', routesNewsNew)
-//app.use('/registroPersona', express.static(path.join(__dirname, 'imagenes')));
 
 //-----Razones
 app.use('/razonPersona', routesRazonesPersona)
@@ -123,17 +117,9 @@ app.use('/razonesSocialNetworks', routesRazonesSocialNetworks)
 app.use('/', routes)
 app.use('/', routesNew)
 
-//app.use('/imagenes', routesImagen)
-
-//app.use('/public', express.static(`${__dirname}/images`))
-
 app.use('/roles', routesRoles)
 
-//app.use('/', express.static(`${__dirname}/imagen`))
-
 /*app.use('/payment', payment_router)*/
-
-//app.use('/', routesImagenes)
 
 //------------------------ Server running ------------------------
 app.listen(app.get('port'), () => {
