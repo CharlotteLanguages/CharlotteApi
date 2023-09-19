@@ -11,7 +11,6 @@ var conn = mysql.createPool({
     queueLimit: 0
 }); 
 
-
 /*conn.connect(function(err) {
   if (err) throw err;
   console.log('Database is connected successfully !');
