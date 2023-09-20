@@ -13,6 +13,8 @@ const path = require('path');
 const routes = require('./routes/image_routers')
 const routesNew = require('./routes/news_routes')
 
+const routesImagenDefault = require('./routes/imagen_default_routes')
+
 //--------news
 const bodyParser = require('body-parser');
 const indexRouter = require('./router.js');
@@ -116,6 +118,8 @@ app.use('/razonesSocialNetworks', routesRazonesSocialNetworks)
 
 app.use('/', routes)
 app.use('/', routesNew)
+
+app.use('/', routesImagenDefault)
 
 app.use('/roles', routesRoles)
 
