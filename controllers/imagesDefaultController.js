@@ -12,7 +12,6 @@ exports.uploadFile = (req, res) => {
     if (err) return res.send(err);
 
     const { originalname, buffer, mimetype } = req.file;
-    //const {  } = req.body;
     const name_imagen = originalname;
     const imagen_buffer = buffer
     const tipo_imagen = mimetype

@@ -13,7 +13,7 @@ routes.post(
 routes.get('/imagen', (req, res) => {
   req.getConnection((err, conn) => {
     if (err) return res.send(err)
-    conn.query('SELECT imagen_url FROM imagen_por_defecto', (err, rows) => {
+    conn.query('SELECT id, imagen_url FROM imagen_por_defecto', (err, rows) => {
       if (err) return res.send(err)
       res.json(rows)
     })
@@ -30,7 +30,7 @@ routes.get('/imagen/:id', (req, res) => {
   })
 })
 
-routes.get('/imagen/:name_imagen', (req, res) => {
+routes.get('/img/:name_imagen', (req, res) => {
   const id = req.params.name_imagen;
   const sql = 'SELECT name_imagen, tipo_imagen, imagen_buffer FROM imagen_por_defecto where name_imagen = ?';
 
