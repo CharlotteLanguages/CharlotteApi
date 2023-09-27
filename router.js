@@ -6,53 +6,57 @@ const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
  
- 
 router.post('/login', loginValidation, (req, res, next) => {
+  const email = req.body.email;
+  const password = req.body.password;
+
   db.query(
-    `SELECT * FROM PERSON WHERE email = ${db.escape(req.body.email)};`,
+    'SELECT * FROM PERSON WHERE email = ?',
+    [email],
     (err, result) => {
-      // user does not exists
       if (err) {
         throw err;
         return res.status(400).send({
           msg: err
         });
       }
+
       if (!result.length) {
         return res.status(401).send({
-          msg: 'Email or password is incorrect!'
+          msg: 'Email is incorrect!'
         });
       }
-      // check password
-      bcrypt.compare(
-        req.body.password,
-        result[0]['password'],
-        (bErr, bResult) => {
-          // wrong password
-          if (bErr) {
-            throw bErr;
-            return res.status(401).send({
-              msg: 'Email or password is incorrect!'
-            });
-          }
-          if (bResult == false) {
-            const token = jwt.sign({idPerson:result[0].idPerson},'the-super-strong-secrect',{ expiresIn: '1h' });
-            /*db.query(
-              `UPDATE PERSON SET last_login = now() WHERE idPerson = '${result[0].id}'`
-            );*/
-            return res.status(200).send({
-              msg: 'Logged in!',
-              token,
-              user: result[0]
-            });
-          }
+
+      // Verificar la contraseña utilizando bcrypt
+      bcrypt.compare(password, result[0]['password'], (bErr, bResult) => {
+        if (bErr) {
+          throw bErr;
           return res.status(401).send({
-            msg: 'Username or password is incorrect!'
+            msg: 'Email or password is incorrect!'
           });
         }
-      );
+
+        if (bResult === true) {
+          const token = jwt.sign(
+            { idPerson: result[0].idPerson },
+            'the-super-strong-secret',
+            { expiresIn: '1h' }
+          );
+
+          return res.status(200).send({
+            msg: 'Logged in!',
+            token,
+            user: result[0]
+          });
+        } else {
+          return res.status(401).send({
+            msg: 'Email or password is incorrect!'
+          });
+        }
+      });
     }
   );
 });
+
  
 module.exports = router;

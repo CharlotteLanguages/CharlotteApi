@@ -40,14 +40,15 @@ routes.get('/', (req, res) =>{
 
 routes.post('/', async (req, res) =>{
 
-    const { name, lastName, birthDate, gender, email, userName, password, detail, idMembership_fk, idRol_fk, razon, imagen} = req.body;
+    const { name, lastName, birthDate, gender, email, userName, password, detail, idMembership_fk, idRol_fk} = req.body;
+    const imagen = `https://apicharlotte.up.railway.app/img/userDefault.jpg`
 
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
         console.log(hashedPassword)
 
-        const sql = 'INSERT INTO PERSON (name, lastName, birthDate, gender, email, userName, password, detail, idMembership_fk, idRol_fk, razon, imagen) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)';
-        db.query(sql, [name, lastName, birthDate, gender, email, userName, hashedPassword, detail, idMembership_fk, idRol_fk, razon, imagen], (err, result) => {
+        const sql = 'INSERT INTO PERSON (name, lastName, birthDate, gender, email, userName, password, detail, idMembership_fk, idRol_fk, imagen) VALUES(?,?,?,?,?,?,?,?,?,?,?)';
+        db.query(sql, [name, lastName, birthDate, gender, email, userName, hashedPassword, detail, idMembership_fk, idRol_fk, imagen], (err, result) => {
         if (err) throw err;
         res.send('Usuario registrado correctamente.');
         });
@@ -87,58 +88,3 @@ routes.put('/:idPerson', upload.single('image'), (req,res) => {
 })
 
 module.exports =routes;
-
-
-/*
-
-npm WARN config production Use `--omit=dev` instead.
-﻿
-> nodejs-app@1.0.0 start
-﻿
-> nodemon server.js
-﻿
-[nodemon] 2.0.22
-﻿
-[nodemon] to restart at any time, enter `rs`
-﻿
-[nodemon] watching path(s): *.*
-﻿
-[nodemon] watching extensions: js,mjs,json
-﻿
-[nodemon] starting `node server.js`
-﻿
-Example app listening on port 3000
-﻿
-Database is connected successfully !
-﻿
-/app/routes/student_routes.js:49
-﻿
-const nombre = req.file.originalname;
-﻿
-^
-﻿
-TypeError: Cannot read properties of undefined (reading 'originalname')
-﻿
-at /app/routes/student_routes.js:49:29
-﻿
-at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
-﻿
-at next (/app/node_modules/express/lib/router/route.js:144:13)
-﻿
-at multerMiddleware (/app/node_modules/multer/lib/make-middleware.js:13:41)
-﻿
-at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
-﻿
-at next (/app/node_modules/express/lib/router/route.js:144:13)
-﻿
-at Route.dispatch (/app/node_modules/express/lib/router/route.js:114:3)
-﻿
-at Layer.handle [as handle_request] (/app/node_modules/express/lib/router/layer.js:95:5)
-﻿
-at /app/node_modules/express/lib/router/index.js:284:15
-﻿
-at Function.process_params (/app/node_modules/express/lib/router/index.js:346:12)
-﻿
-[nodemon] app crashed - waiting for file changes before starting...
-
-*/

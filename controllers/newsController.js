@@ -37,3 +37,46 @@ exports.uploadFile = (req, res) => {
       );
   });
 };
+
+exports.updateFile = (req, res) => {
+  req.getConnection((err, conn) => {
+    if (err) return res.send(err);
+
+    const { originalname, buffer, mimetype } = req.file;
+    const { title, description, category, tags, detalles } = req.body;
+    const nameImage = originalname;
+    const imagenBuffer = buffer;
+    const tipo = mimetype;
+    const image = `https://apicharlotte.up.railway.app/news/${nameImage}`;
+
+    const updateData = {
+      title,
+      description,
+      category,
+      tags,
+      image,
+      detalles,
+      nameImage,
+      imagenBuffer,
+      tipo
+    };
+
+    conn.query(
+      // Modifica la consulta para realizar una actualización
+      "UPDATE " + req.params.tabla + " SET ? WHERE idNews = ?",
+      [updateData, req.params.id], // Utiliza un identificador (por ejemplo, 'id') para especificar qué fila actualizar
+      (err, rows) => {
+        console.log(
+          err
+            ? "Err UPDATE " + req.params.tabla + " " + err
+            : req.params.tabla + ": Updated"
+        );
+        res.json(
+          err
+            ? { err: "Error al actualizar la noticia" }
+            : { msg: "Noticia actualizada con éxito." }
+        );
+      }
+    );
+  });
+};
