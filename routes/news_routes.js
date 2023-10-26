@@ -16,7 +16,7 @@ routes.post(
 );
 
 routes.put(
-  "new/:tabla/:id",
+  "/new/:tabla/:id",
   imagesController.updateFile
 );
 
@@ -69,17 +69,6 @@ routes.delete('/news/:id', (req, res) =>{
   })
 })
 
-/*routes.put('/new/:id', (req, res) =>{
-  console.log('entra al update 1!');
-  req.getConnection((err, conn)=>{
-    console.log('entra al update!');
-      if(err) return res.send(err)
-      conn.query('UPDATE NEWS set ? WHERE idNews = ?', [req.body, req.params.id], (err, rows)=>{
-                  if(err) return res.send(err)
-                  res.json(rows)
-              })
-  })
-})*/
 
 routes.put('/new/:id', (req, res) => {
   console.log('entra al update 1!');

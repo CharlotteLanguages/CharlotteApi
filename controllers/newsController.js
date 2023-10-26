@@ -31,7 +31,7 @@ exports.uploadFile = (req, res) => {
           res.json(
             err
               ? { err: "Error al cargar la noticia" }
-              : { msg: "Noticia cargada con exito." }
+              : { msg: "Noticia cargada con exito" }
           );
         }
       );
@@ -44,7 +44,7 @@ exports.updateFile = (req, res) => {
   req.getConnection((err, conn) => {
     if (err) return res.send(err);
 
-    const { id } = req.params; // Obtener el ID de la noticia que deseas actualizar
+    const { idNews } = req.params; // Obtener el ID de la noticia que deseas actualizar
     const { title, description, category, tags, detalles } = req.body;
 
     const updateData = {
@@ -70,8 +70,8 @@ exports.updateFile = (req, res) => {
     }
 
     conn.query(
-      "UPDATE " + req.params.tabla + " SET ? WHERE id = ?",
-      [updateData, id],
+      "UPDATE " + req.params.tabla + " SET ? WHERE idNews = ?",
+      [updateData, idNews],
       (err, rows) => {
         console.log(
           err
