@@ -38,38 +38,45 @@ exports.uploadFile = (req, res) => {
   });
 };
 
+
+
 exports.updateFile = (req, res) => {
   req.getConnection((err, conn) => {
     if (err) return res.send(err);
 
-    const { originalname, buffer, mimetype } = req.file;
+    const { id } = req.params; // Obtener el ID de la noticia que deseas actualizar
     const { title, description, category, tags, detalles } = req.body;
-    const nameImage = originalname;
-    const imagenBuffer = buffer;
-    const tipo = mimetype;
-    const image = `https://apicharlotte.up.railway.app/news/${nameImage}`;
 
     const updateData = {
       title,
       description,
       category,
       tags,
-      image,
       detalles,
-      nameImage,
-      imagenBuffer,
-      tipo
     };
 
+    // Si se proporciona una nueva imagen, también puedes actualizarla
+    if (req.file) {
+      const { originalname, buffer, mimetype } = req.file;
+      const nameImage = originalname;
+      const imagenBuffer = buffer;
+      const tipo = mimetype;
+      const image = `https://apicharlotte.up.railway.app/news/${nameImage}`;
+
+      updateData.nameImage = nameImage;
+      updateData.imagenBuffer = imagenBuffer;
+      updateData.tipo = tipo;
+      updateData.image = image;
+    }
+
     conn.query(
-      // Modifica la consulta para realizar una actualización
-      "UPDATE " + req.params.tabla + " SET ? WHERE idNews = ?",
-      [updateData, req.params.id], // Utiliza un identificador (por ejemplo, 'id') para especificar qué fila actualizar
+      "UPDATE " + req.params.tabla + " SET ? WHERE id = ?",
+      [updateData, id],
       (err, rows) => {
         console.log(
           err
             ? "Err UPDATE " + req.params.tabla + " " + err
-            : req.params.tabla + ": Updated"
+            : req.params.tabla + ": News updated"
         );
         res.json(
           err

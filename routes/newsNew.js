@@ -10,7 +10,7 @@ app.use(bodyParser.json());
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });  
 
-  routes.post('/', upload.single('image'), (req, res) =>{
+  routes.post('/', upload.single('images'), (req, res) =>{
     const { originalname, buffer, nombre, apellido, direccion, telefono } = req.file;
     const name = originalname
     const imagen = buffer
@@ -27,7 +27,6 @@ const upload = multer({ storage: storage });
         res.status(500).send('Error al registrar persona.');
     }
 })
-
 
 
 // Ruta para obtener los detalles de una persona por su ID
