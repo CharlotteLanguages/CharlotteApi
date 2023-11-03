@@ -1,4 +1,4 @@
-const express = require('express');
+/*const express = require('express');
 const routes = express.Router();
 const bcrypt = require('bcrypt');
 const db  = require('../dbConnection');
@@ -70,7 +70,7 @@ routes.delete('/:id', (req, res) =>{
 
 
 
-routes.put('/:idPerson', upload.single('image'), (req,res) => {
+/*routes.put('/:idPerson', upload.single('image'), (req,res) => {
     const { name, lastName, birthDate, gender, email, userName, password, detail, idMembership_fk, idRol_fk, razon} = req.body;
 
     const names = req.file.originalname;
@@ -85,6 +85,85 @@ routes.put('/:idPerson', upload.single('image'), (req,res) => {
         console.error(err);
         res.status(500).send('Error al registrar el usuario.');
     }
+})]*/
+
+
+// Ruta para actualizar un usuario por ID
+/*routes.put('/update/:id', async (req, res) => {
+    const userId = req.params.id; // Obtiene el ID del usuario de la URL
+    const { name, lastName, birthDate, gender, email, userName, password, detail, idMembership_fk, idRol_fk, imagen } = req.body;
+
+    try {
+        let hashedPassword = password;
+
+        if (password) {
+            // Si se proporcionó una nueva contraseña, hasheala
+            hashedPassword = await bcrypt.hash(password, 10);
+        }
+
+        const updateData = {
+            name,
+            lastName,
+            birthDate,
+            gender,
+            email,
+            userName,
+            password: hashedPassword,
+            detail,
+            idMembership_fk,
+            idRol_fk,
+            imagen,
+        };
+
+        const sql = 'UPDATE PERSON SET ? WHERE idPerson = ?';
+        db.query(sql, [updateData, userId], (err, result) => {
+            if (err) throw err;
+            res.send('Usuario actualizado correctamente.');
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error al actualizar el usuario.');
+    }
+});
+
+  
+
+module.exports =routes;*/
+
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs')
+
+const express = require('express');
+const routes = express.Router();
+const db = require('../dbConnection');
+
+const imagesController = require("../controllers/studentController");
+const { SourceTextModule } = require('vm');
+
+routes.post(
+    "/:tabla",
+    imagesController.upload,
+    imagesController.updloadFile
+);
+
+routes.get('/', (req, res) => {
+    req.getConnection((err, conn) => {
+        if(err) return res.send(err)
+        conn.query('SELECT * FROM PERSON', (errr, rows) => {
+            if(err) return res.send(err)
+            res.json(rows)
+        })
+    })
 })
 
-module.exports =routes;
+routes.get('/:id', (req, res) => {
+    req.getConnection((err, conn) => {
+        conn.query('SELECT * FROM PERSON WHERE idPerson = ?' , [req.params.id], (err, rows) => {
+            if(err) return res.send(err)
+            res.json(rows)
+        })
+    })
+})
+
+module.exports = routes;
