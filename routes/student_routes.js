@@ -166,4 +166,33 @@ routes.get('/:id', (req, res) => {
     })
 })
 
+routes.get(':/nameImagen', (req, res) => {
+    const id = req.body.nameImagen;
+    const sql = 'SELECT nameImagen, tipo, imageBuffer FROM PERSON WHERE nameImagen = ?';
+
+    db.query(sql, [id], (err, result) => {
+        if(err) {
+            return res.statusMessage(500).send(err);
+        }
+        if(result.length === 0) {
+            return res.status(404).send('Archivo no encontrado.');
+        }
+        const { tipo, imageBuffer } = result[0];
+
+        res.setHeader('content-type', tipo);
+
+        res.send(imageBuffer);
+    })
+})
+
+routes.delete('/:id', (req, res) =>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+        conn.query('DELETE FROM PERSON WHERE idPerson = ?', [req.params.id], (err, rows)=>{
+                    if(err) return res.send(err)
+                    res.json(rows)
+                })
+    })
+  })
+
 module.exports = routes;
