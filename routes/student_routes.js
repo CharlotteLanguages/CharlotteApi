@@ -150,7 +150,7 @@ routes.post(
 routes.get('/', (req, res) => {
     req.getConnection((err, conn) => {
         if(err) return res.send(err)
-        conn.query('SELECT * FROM PERSON', (errr, rows) => {
+        conn.query('SELECT idPerson, name, lastName, birthDate, gender, email, userName, password, detail, idMembership_fk, idRol_fk, imagen FROM PERSON', (errr, rows) => {
             if(err) return res.send(err)
             res.json(rows)
         })
