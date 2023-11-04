@@ -159,14 +159,14 @@ routes.get('/', (req, res) => {
 
 routes.get('/:id', (req, res) => {
     req.getConnection((err, conn) => {
-        conn.query('SELECT * FROM PERSON WHERE idPerson = ?' , [req.params.id], (err, rows) => {
+        conn.query('SELECT idPerson, name, lastName, birthDate, gender, email, userName, password, detail, idMembership_fk, idRol_fk, imagen FROM PERSON WHERE idPerson = ?' , [req.params.id], (err, rows) => {
             if(err) return res.send(err)
             res.json(rows)
         })
     })
 })
 
-routes.get(':/nameImagen', (req, res) => {
+routes.get('/:nameImagen', (req, res) => {
     const id = req.body.nameImagen;
     const sql = 'SELECT nameImagen, tipo, imageBuffer FROM PERSON WHERE nameImagen = ?';
 
