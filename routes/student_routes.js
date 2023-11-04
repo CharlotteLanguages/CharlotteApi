@@ -166,7 +166,7 @@ routes.get('/:id', (req, res) => {
     })
 })
 
-routes.get('/:nameImagen', (req, res) => {
+routes.get('/student/:nameImagen', (req, res) => {
     const id = req.body.nameImagen;
     const sql = 'SELECT nameImagen, tipo, imageBuffer FROM PERSON WHERE nameImagen = ?';
 
