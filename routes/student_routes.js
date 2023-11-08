@@ -167,7 +167,7 @@ routes.get('/:id', (req, res) => {
 })
 
 routes.get('/student/:nameImagen', (req, res) => {
-    const id = req.body.nameImagen;
+    const id = req.params.nameImagen;
     const sql = 'SELECT nameImagen, tipo, imageBuffer FROM PERSON WHERE nameImagen = ?';
 
     db.query(sql, [id], (err, result) => {
@@ -179,7 +179,7 @@ routes.get('/student/:nameImagen', (req, res) => {
         }
         const { tipo, imageBuffer } = result[0];
 
-        res.setHeader('content-type', tipo);
+        res.setHeader('content-Type', tipo);
 
         res.send(imageBuffer);
     })
