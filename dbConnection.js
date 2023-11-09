@@ -58,3 +58,5 @@ connection.on('error', function(err) {
     throw err;
   }
 });
+
+module.exports = connection;
