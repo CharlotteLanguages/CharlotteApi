@@ -14,8 +14,8 @@ exports.updloadFile = (req, res) => {
         const { name, lastName, birthDate, gender, email, userName, password, detail, idMembership_fk, idRol_fk } = req.body;
         const { originalname, buffer, mimetype } = req.file;
         const nameImagen = originalname;
-        const imageBuffer = buffer;
-        const tipo = mimetype;
+        const imageBuffer = buffer
+        const tipo = mimetype
         const imagen = `https://apicharlotte.up.railway.app/student/${nameImagen}`
 
         conn.query(

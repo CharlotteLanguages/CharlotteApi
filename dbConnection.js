@@ -1,16 +1,5 @@
 const mysql = require('mysql2');
 
-/*var conn = mysql.createPool({
-    host: 'containers-us-west-153.railway.app',
-    port: 5905,
-    user: 'root',
-    password: '4UuCsu5O6YBY7ZUlSXLr',
-    database: 'railway',
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0
-});*/
-
 var conn = mysql.createConnection({
   host: 'containers-us-west-153.railway.app',
   port: 5905,
@@ -27,4 +16,13 @@ conn.connect(function(err) {
 //module.exports = conn.promise;
 module.exports = conn;
 
+setInterval(function() {
+  $.ajax({
+    url: "/ping", // La URL que manejará la solicitud de ping en tu servidor
+    method: "GET",
+    success: function(data) {
+      // Procesa la respuesta si es necesario
+    }
+  });
+}, 300000); // Envía una solicitud cada 5 minutos (300,000 milisegundos)
 

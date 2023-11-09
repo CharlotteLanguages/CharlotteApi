@@ -179,7 +179,7 @@ routes.get('/student/:nameImagen', (req, res) => {
         }
         const { tipo, imageBuffer } = result[0];
 
-        res.setHeader('content-Type', tipo);
+        res.setHeader('Content-Type', tipo);
 
         res.send(imageBuffer);
     })
