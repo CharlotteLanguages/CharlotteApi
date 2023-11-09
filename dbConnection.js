@@ -1,4 +1,5 @@
 const mysql = require('mysql2');
+const axios = require('axios');
 
 var conn = mysql.createConnection({
   host: 'containers-us-west-153.railway.app',
@@ -9,20 +10,21 @@ var conn = mysql.createConnection({
 });
 
 conn.connect(function(err) {
-  if (err) throw err;
-  console.log('Database is connected successfully !');
+  if (err){
+    console.error('Error al conectar a la base de datos:', err);
+  } else {
+    console.log('Database is connected successfully !');
+  } 
 });
 
-//module.exports = conn.promise;
 module.exports = conn;
 
 setInterval(function() {
-  $.ajax({
-    url: "/ping", // La URL que manejará la solicitud de ping en tu servidor
-    method: "GET",
-    success: function(data) {
+  axios.get('/ping')
+    .then(function(response) {
       // Procesa la respuesta si es necesario
-    }
-  });
+    })
+    .catch(function(error) {
+      console.error('Error en la solicitud de ping:', error);
+    });
 }, 300000); // Envía una solicitud cada 5 minutos (300,000 milisegundos)
-
