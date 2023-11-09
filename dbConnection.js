@@ -1,5 +1,6 @@
-const mysql = require('mysql2');
-const axios = require('axios');
+/*const mysql = require('mysql2');
+
+const connection = require('express-myconnection');
 
 var conn = mysql.createConnection({
   host: 'containers-us-west-153.railway.app',
@@ -17,14 +18,43 @@ conn.connect(function(err) {
   } 
 });
 
-module.exports = conn;
+connection.on('err', function(err) {
+  console.error('Error de base de datos: ', err.message);
+  if(err.code === 'PROTOCOL_CONNECTION_LOST') {
+    //Reconectar en caso de desconexión
+    connection.connect();
+  } else {
+    throw err;
+  }
+});
 
-setInterval(function() {
-  axios.get('/ping')
-    .then(function(response) {
-      // Procesa la respuesta si es necesario
-    })
-    .catch(function(error) {
-      console.error('Error en la solicitud de ping:', error);
-    });
-}, 300000); // Envía una solicitud cada 5 minutos (300,000 milisegundos)
+module.exports = conn;
+*/
+
+const mysql = require('mysql2');
+
+const connection = mysql.createConnection({
+  host: 'containers-us-west-153.railway.app',
+  port: 5905,
+  user: 'root',
+  password: '4UuCsu5O6YBY7ZUlSXLr',
+  database: 'railway'
+});
+
+connection.connect(function(err) {
+  if (err) {
+    console.error('Error al conectar a la base de datos:', err);
+  } else {
+    console.log('Conexión exitosa a la base de datos');
+  }
+});
+
+connection.on('error', function(err) {
+  console.error('Error de base de datos:', err);
+  if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+    // Reconectar en caso de desconexión
+    connection.connect();
+  } else {
+    throw err;
+  }
+});
