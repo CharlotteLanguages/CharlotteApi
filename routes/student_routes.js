@@ -10,12 +10,13 @@ const imagesController = require("../controllers/studentController");
 //const { SourceTextModule } = require('vm');
 
 routes.post(
-    "student/:tabla",
+    "/:tabla",
     imagesController.upload,
     imagesController.updloadFile
 );
 
-routes.get('/student', (req, res) => {
+//Metodo para buscar la lista completa de personas
+routes.get('/', (req, res) => {
     req.getConnection((err, conn) => {
         if(err) return res.send(err)
         conn.query('SELECT idPerson, name, lastName, birthDate, gender, email, userName, password, detail, idMembership_fk, idRol_fk, imagen FROM PERSON', (err, rows) => {
@@ -25,7 +26,8 @@ routes.get('/student', (req, res) => {
     })
 })
 
-routes.get('/student/:id', (req, res) => {
+//Metodo para buscar una persona por medio del id
+routes.get('/:id', (req, res) => {
     req.getConnection((err, conn) => {
         conn.query('SELECT idPerson, name, lastName, birthDate, gender, email, userName, password, detail, idMembership_fk, idRol_fk, imagen FROM PERSON WHERE idPerson = ?' , [req.params.id], (err, rows) => {
             if(err) return res.send(err)
@@ -34,7 +36,9 @@ routes.get('/student/:id', (req, res) => {
     })
 })
 
+//Metodo para mostrar la imagen de perfil de la persona
 routes.get('/student/:nameImagen', (req, res) => {
+    console.log("Entra aqui tambien");
     const id = req.params.nameImagen;
     const sql = 'SELECT nameImagen, tipo, imageBuffer FROM PERSON WHERE nameImagen = ?';
 
@@ -53,7 +57,8 @@ routes.get('/student/:nameImagen', (req, res) => {
     })
 })
 
-routes.delete('student/:id', (req, res) =>{
+//Metodo para borrar una persona por medio del id
+routes.delete('/:id', (req, res) =>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
         conn.query('DELETE FROM PERSON WHERE idPerson = ?', [req.params.id], (err, rows)=>{

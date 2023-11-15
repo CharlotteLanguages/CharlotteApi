@@ -83,7 +83,7 @@ app.get('/', (req, res) =>{
 })
 
 app.use('/membership', routesMembership)
-app.use('/', routesStudent)//Ruta student
+app.use('/student', routesStudent) //Ruta student
 app.use('/course', routesCourses)
 app.use('/activities', routesActivities)
 app.use('/resource', routesResources)
