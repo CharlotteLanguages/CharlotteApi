@@ -10,12 +10,12 @@ const imagesController = require("../controllers/studentController");
 //const { SourceTextModule } = require('vm');
 
 routes.post(
-    "/:tabla",
+    "student/:tabla",
     imagesController.upload,
     imagesController.updloadFile
 );
 
-routes.get('/', (req, res) => {
+routes.get('/student', (req, res) => {
     req.getConnection((err, conn) => {
         if(err) return res.send(err)
         conn.query('SELECT idPerson, name, lastName, birthDate, gender, email, userName, password, detail, idMembership_fk, idRol_fk, imagen FROM PERSON', (err, rows) => {
@@ -25,7 +25,7 @@ routes.get('/', (req, res) => {
     })
 })
 
-routes.get('/:id', (req, res) => {
+routes.get('/student/:id', (req, res) => {
     req.getConnection((err, conn) => {
         conn.query('SELECT idPerson, name, lastName, birthDate, gender, email, userName, password, detail, idMembership_fk, idRol_fk, imagen FROM PERSON WHERE idPerson = ?' , [req.params.id], (err, rows) => {
             if(err) return res.send(err)
@@ -34,7 +34,7 @@ routes.get('/:id', (req, res) => {
     })
 })
 
-routes.get('/:nameImagen', (req, res) => {
+routes.get('/student/:nameImagen', (req, res) => {
     const id = req.params.nameImagen;
     const sql = 'SELECT nameImagen, tipo, imageBuffer FROM PERSON WHERE nameImagen = ?';
 
@@ -53,7 +53,7 @@ routes.get('/:nameImagen', (req, res) => {
     })
 })
 
-routes.delete('/:id', (req, res) =>{
+routes.delete('student/:id', (req, res) =>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
         conn.query('DELETE FROM PERSON WHERE idPerson = ?', [req.params.id], (err, rows)=>{
