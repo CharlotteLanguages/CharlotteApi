@@ -15,44 +15,48 @@ routes.post(
     imagesController.updloadFile
 );
 
-routes.get('/', (req, res) => {
-    req.getConnection((err, conn) => {
-        if(err) return res.send(err)
-        conn.query('SELECT idPerson, name, lastName, birthDate, gender, email, userName, password, detail, idMembership_fk, idRol_fk, imagen FROM PERSON', (err, rows) => {
-            if(err) return res.send(err)
-            res.json(rows)
-        })
-    })
-})
+routes.get('/', async (req, res) => {
+    try {
+        const conn = req.getConnection();
+        const rows = await conn.query('SELECT idPerson, name, lastName, birthDate, gender, email, userName, password, detail, idMembership_fk, idRol_fk, imagen FROM PERSON');
+        res.json(rows);
+    } catch (error) {
+        res.status(500).send(error.message || "Error al obtener los datos de la base de datos.");
+    }
+});
 
-routes.get('/:id', (req, res) => {
-    req.getConnection((err, conn) => {
-        conn.query('SELECT idPerson, name, lastName, birthDate, gender, email, userName, password, detail, idMembership_fk, idRol_fk, imagen FROM PERSON WHERE idPerson = ?' , [req.params.id], (err, rows) => {
+
+routes.get('/:id', async (req, res) => {
+    try {
+        const conn = req.getConnection();
+        const rows = await conn.query('SELECT idPerson, name, lastName, birthDate, gender, email, userName, password, detail, idMembership_fk, idRol_fk, imagen FROM PERSON WHERE idPerson = ?' , [req.params.id], (err, rows) => {
             if(err) return res.send(err)
             res.json(rows)
         })
-    })
-})
+    } catch (error) {
+        res.status(500).send(error.message || "Error al obtener los datos de la base de datos.");
+    }
+});
 
 routes.get('/student/:nameImagen', (req, res) => {
     const id = req.params.nameImagen;
     const sql = 'SELECT nameImagen, tipo, imageBuffer FROM PERSON WHERE nameImagen = ?';
 
     db.query(sql, [id], (err, result) => {
-        if(err) {
-            return res.statusMessage(500).send(err);
+        if (err) {
+            console.error(err);
+            return res.status(500).send('Error al obtener la imagen.');
         }
-        console.log(result);
-        if(result.length === 0) {
+        if (result.length === 0) {
             return res.status(404).send('Archivo no encontrado.');
         }
         const { tipo, imageBuffer } = result[0];
 
         res.setHeader('Content-Type', tipo);
-
         res.send(imageBuffer);
-    })
-})
+    });
+});
+
 
 routes.delete('/:id', (req, res) =>{
     req.getConnection((err, conn)=>{
