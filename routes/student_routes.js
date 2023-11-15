@@ -34,7 +34,7 @@ routes.get('/:id', (req, res) => {
     })
 })
 
-routes.get('/student/:nameImagen', (req, res) => {
+routes.get('/:nameImagen', (req, res) => {
     const id = req.params.nameImagen;
     const sql = 'SELECT nameImagen, tipo, imageBuffer FROM PERSON WHERE nameImagen = ?';
 
@@ -42,7 +42,6 @@ routes.get('/student/:nameImagen', (req, res) => {
         if(err) {
             return res.statusMessage(500).send(err);
         }
-        console.log(result);
         if(result.length === 0) {
             return res.status(404).send('Archivo no encontrado.');
         }
