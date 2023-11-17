@@ -16,7 +16,7 @@ exports.updloadFile = (req, res) => {
         const nameImagen = originalname;
         const imageBuffer = buffer
         const tipo = mimetype
-        const imagen = `https://apicharlotte.up.railway.app/student/${nameImagen}`
+        const imagen = `https://apicharlotte.up.railway.app/student/student/${nameImagen}`
 
         conn.query(
             "INSERT INTO " + req.params.tabla + " set ?",
