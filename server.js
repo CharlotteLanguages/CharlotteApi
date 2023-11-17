@@ -91,7 +91,7 @@ app.use('/certificate', routesCertificado)
 app.use('/privateClasses', routesPrivateClass)
 app.use('/promotions', routesPromociones)
 app.use('/referrals', routesReferrals)
-app.use('/sponsor', routesSponsors)
+app.use('/', routesSponsors) //Ruta patrocinadores
 app.use('/reviews', routesResenas)
 app.use('/rol', routesRol )
 app.use('/register', routesRegister)

@@ -1,73 +1,65 @@
-const express = require('express');
-const routes = express.Router()
-const db = require('../dbConnection');
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs')
 
-const storage = multer.diskStorage({
-    destination: path.join(__dirname, '../images'),
-    filename: (req, file, cb) => {
-        cb(null, `${file.filename}_${Date.now}${path.extname(file.originalname)}`);
-    } 
-});
+const express = require('express');
+const routes = express.Router();
+const db = require('../dbConnection');
 
-const upload = multer({ storage: storage });
-const host = 'https://apicharlotte.up.railway.app/'
+const imagesController = require("../controllers/patrocinadorController");
+const { SourceTextModule } = require('vm');
 
-routes.get('/', (req, res) =>{
-    req.getConnection((err, conn)=>{
-        if(err) return res.send(err)
-        conn.query('SELECT * FROM PATROCINADOR', (err, rows)=>{
-                    if(err) return res.send(err)
-                    res.json(rows)
-                })
-    })
-})
+routes.post(
+    "/sponsor/:tabla",
+    imagesController.upload
+);
 
-routes.get('/:id', (req, res) =>{
-    req.getConnection((err, conn)=>{
-        if(err) return res.send(err)
-        conn.query('SELECT * FROM PATROCINADOR WHERE idPatrocinador = ?', [req.params.id],(err, rows)=>{
-                    if(err) return res.send(err)
-                    res.json(rows)
-                })
-    })
-})
-
-routes.post('/', upload.single('image'), async (req, res) =>{
-    const { nombre, direccion, webSite, razon } = req.body;
-    const name = req.file.originalname;
-    const image = `${host }public/${name}`
-
-    try {
-        const sql = 'INSERT INTO PATROCINADOR (nombre, direccion, webSite, image, razon) VALUES (?, ?, ?, ?, ?)';
-        db.query(sql, [nombre, direccion, webSite, image, razon], (err, result) =>{
-            if(err) throw err;
-            res.send('Imagen cargada con exito');
+routes.get('/sponsor', (req, res) => {
+    req.getConnection((err, conn) => {
+        if (err) return res.send(err)
+        conn.query('SELECT idPatrocinador, nombre, direccion, webSite, image as imagen_url, nameImage, tipo FROM PATROCINADOR', (err, rows) => {
+            if (err) return res.send(err)
+            res.json(rows)
         })
-    } catch(err) {
-        console.error(err)
-        res.status(500).send('Error al cargar imagen.');
-    }
-})
-
-routes.delete('/:id', (req, res) =>{
-    req.getConnection((err, conn)=>{
-        if(err) return res.send(err)
-        conn.query('DELETE FROM PATROCINADOR WHERE idPatrocinador = ?', [req.params.id], (err, rows)=>{
-                    if(err) return res.send(err)
-                    res.json(rows)
-                })
     })
 })
 
-routes.put('/:id', (req, res) =>{
-    req.getConnection((err, conn)=>{
-        if(err) return res.send(err)
-        conn.query('UPDATE PATROCINADOR set ? WHERE idPatrocinador = ?', [req.body, req.params.id], (err, rows)=>{
-                    if(err) return res.send(err)
-                    res.json(rows)
-                })
+routes.get('/sponsor/:id', (req, res) => {
+    req.getConnection((err, conn) => {
+      if (err) return res.send(err)
+      conn.query('SELECT idPatrocinador, nombre, direccion, webSite, image as imagen_url, nameImage, tipo FROM PATROCINADOR WHERE idPatrocinador = ?', [req.params.id], (err, rows) => {
+        if (err) return res.send(err)
+        res.json(rows)
+      })
+    })
+  })
+
+routes.get('/sponsor/:nameImage', (req, res) => {
+    const id = req.params.nameImage;
+    const sql = 'SELECT nameImage, tipo, imagenBuffer FROM PATROCINADOR WHERE nameImagen = ?';
+
+    db.query(sql, [id], (err, result) => {
+        if(err) {
+          return res.statusMessage(500).send(err);
+        }
+        if (result.length === 0) {
+          return res.status(404).send('Archivo no encontrado.');
+        }
+        const { tipo, imagenBuffer } = result[0];
+    
+        res.setHeader('Content-Type', tipo);
+    
+        res.send(imagenBuffer);
+      })
+})
+
+routes.delete('/sponsor/:id', (req, res) => {
+    req.getConnection((err, conn) => {
+        if (err) return res.send(err)
+        conn.query('DELETE FROM PATROCINADOR WHERE idPatrocinador = ?', [req.params.id], (err, rows) => {
+            if (err) return res.send(err)
+            res.json(rows)
+        })
     })
 })
 
