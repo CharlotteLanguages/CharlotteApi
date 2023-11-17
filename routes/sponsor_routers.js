@@ -35,9 +35,11 @@ routes.get('/sponsor/:id', (req, res) => {
     })
   })
 
-routes.get('/:nameImage', (req, res) => {
+  //Metodo para mostrar la imagen de perfil de los patrocinadores
+routes.get('/sponsor/:nameImage', (req, res) => {
+    console.log("Entra aqui sponsor")
     const id = req.params.nameImage;
-    const sql = 'SELECT nameImage, tipo, imagenBuffer FROM PATROCINADOR WHERE nameImagen = ?';
+    const sql = 'SELECT nameImage, tipo, imagenBuffer FROM PATROCINADOR WHERE nameImage = ?';
 
     db.query(sql, [id], (err, result) => {
         if(err) {
