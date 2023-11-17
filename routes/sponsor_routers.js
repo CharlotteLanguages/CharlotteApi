@@ -11,7 +11,8 @@ const { SourceTextModule } = require('vm');
 
 routes.post(
     "/sponsor/:tabla",
-    imagesController.upload
+    imagesController.upload,
+    imagesController.uploadFile
 );
 
 routes.get('/sponsor', (req, res) => {
@@ -34,7 +35,7 @@ routes.get('/sponsor/:id', (req, res) => {
     })
   })
 
-routes.get('/sponsor/:nameImage', (req, res) => {
+routes.get('/:nameImage', (req, res) => {
     const id = req.params.nameImage;
     const sql = 'SELECT nameImage, tipo, imagenBuffer FROM PATROCINADOR WHERE nameImagen = ?';
 

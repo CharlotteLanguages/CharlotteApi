@@ -30,8 +30,8 @@ exports.uploadFile = (req, res) => {
           );
           res.json(
             err
-              ? { err: "Error al cargar la noticia" }
-              : { msg: "Noticia cargada con exito" }
+              ? { err: "Error al cargar el patrocinador" }
+              : { msg: "Patrocinador cargado con exito" }
           );
         }
       );
