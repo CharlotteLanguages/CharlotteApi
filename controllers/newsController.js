@@ -1,6 +1,6 @@
 const multer = require('multer');
 const path = require('path');
-const fs = require('fs')
+const fs = require('fs');
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -14,74 +14,70 @@ exports.uploadFile = (req, res) => {
     const { originalname, buffer, mimetype } = req.file;
     const { title, description, category, tags, detalles } = req.body;
     const nameImage = originalname;
-    const imagenBuffer = buffer
-    const tipo = mimetype
-    const image = `https://apicharlotte.up.railway.app/news/${nameImage}`
+    const imagenBuffer = buffer;
+    const tipo = mimetype;
+    const image = `https://apicharlotte.up.railway.app/news/${nameImage}`;
 
+    console.log('req.body:', req.body);
+    console.log('req.file:', req.file);
 
     conn.query(
-        "INSERT INTO " + req.params.tabla + " set ?",
-        [{ title, description, category, tags, image, detalles, nameImage, imagenBuffer, tipo  }],
-        (err, rows) => {
-          console.log(
-            err
-              ? "Err INSERT INTO " + req.params.tabla + " " + err
-              : req.params.tabla + ": New add"
-          );
-          res.json(
-            err
-              ? { err: "Error al cargar la noticia" }
-              : { msg: "Noticia cargada con exito" }
-          );
-        }
-      );
+      "INSERT INTO " + req.params.tabla + " SET ?",
+      [{ title, description, category, tags, image, detalles, nameImage, imagenBuffer, tipo }],
+      (err, rows) => {
+        console.log(
+          err
+            ? "Err INSERT INTO " + req.params.tabla + " " + err
+            : req.params.tabla + ": New add"
+        );
+        res.json(
+          err
+            ? { err: "Error al cargar la noticia" }
+            : { msg: "Noticia cargada con exito" }
+        );
+      }
+    );
   });
 };
-
-
-
-exports.updateFile = (req, res) => {
+exports.updateImage = (req, res) => {
   req.getConnection((err, conn) => {
     if (err) return res.send(err);
 
-    const { idNews } = req.params; // Obtener el ID de la noticia que deseas actualizar
     const { title, description, category, tags, detalles } = req.body;
+    const updatedFields = {};
+    
+    if (title) updatedFields.title = title;
+    if (description) updatedFields.description = description;
+    if (category) updatedFields.category = category;
+    if (tags) updatedFields.tags = tags;
+    if (detalles) updatedFields.detalles = detalles;
 
-    const updateData = {
-      title,
-      description,
-      category,
-      tags,
-      detalles,
-    };
-
-    // Si se proporciona una nueva imagen, también puedes actualizarla
+    // Si se proporciona una nueva imagen, actualizar los campos relacionados con la imagen
     if (req.file) {
       const { originalname, buffer, mimetype } = req.file;
       const nameImage = originalname;
-      const imagenBuffer = buffer;
       const tipo = mimetype;
       const image = `https://apicharlotte.up.railway.app/news/${nameImage}`;
 
-      updateData.nameImage = nameImage;
-      updateData.imagenBuffer = imagenBuffer;
-      updateData.tipo = tipo;
-      updateData.image = image;
+      updatedFields.nameImage = nameImage;
+      updatedFields.imagenBuffer = buffer;
+      updatedFields.tipo = tipo;
+      updatedFields.image = image;
     }
 
     conn.query(
       "UPDATE " + req.params.tabla + " SET ? WHERE idNews = ?",
-      [updateData, idNews],
+      [updatedFields, req.params.idNews],  
       (err, rows) => {
         console.log(
           err
             ? "Err UPDATE " + req.params.tabla + " " + err
-            : req.params.tabla + ": News updated"
+            : req.params.tabla + ": Updated"
         );
         res.json(
           err
             ? { err: "Error al actualizar la noticia" }
-            : { msg: "Noticia actualizada con éxito." }
+            : { msg: "Noticia actualizada con éxito" }
         );
       }
     );

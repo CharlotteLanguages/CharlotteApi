@@ -16,8 +16,9 @@ routes.post(
 );
 
 routes.put(
-  "/new/:tabla/:id",
-  imagesController.updateFile
+  "/new/:tabla/:idNews",
+  imagesController.upload,
+  imagesController.updateImage
 );
 
 routes.get('/news', (req, res) => {
@@ -33,7 +34,7 @@ routes.get('/news', (req, res) => {
 routes.get('/new/:id', (req, res) => {
   req.getConnection((err, conn) => {
     if (err) return res.send(err)
-    conn.query('SELECT title, description, category, tags, image as imagen_url, nameImage, tipo, detalles FROM NEWS WHERE idNews = ?', [req.params.id], (err, rows) => {
+    conn.query('SELECT idNews, title, description, category, tags, image as imagen_url, nameImage, tipo, detalles FROM NEWS WHERE idNews = ?', [req.params.id], (err, rows) => {
       if (err) return res.send(err)
       res.json(rows)
     })
@@ -59,6 +60,16 @@ routes.get('/news/:nameImage', (req, res) => {
   })
 }) 
 
+routes.put('/news/:id', (req, res) =>{
+  req.getConnection((err, conn)=>{
+      if(err) return res.send(err)
+      conn.query('UPDATE NEWS set ? WHERE idNews = ?', [req.body, req.params.id], (err, rows)=>{
+                  if(err) return res.send(err)
+                  res.json(rows)
+              })
+  })
+})
+
 routes.delete('/news/:id', (req, res) =>{
   req.getConnection((err, conn)=>{
       if(err) return res.send(err)
@@ -67,52 +78,6 @@ routes.delete('/news/:id', (req, res) =>{
                   res.json(rows)
               })
   })
-})
-
-
-routes.put('/new/:id', (req, res) => {
-  console.log('entra al update 1!');
-  req.getConnection((err, conn) => {
-    console.log('entra al update 2!');
-    if (err) return res.send(err);
-
-    const { originalname, buffer, mimetype } = req.file;
-    const { title, description, category, tags, detalles } = req.body;
-    const nameImage = originalname;
-    const imagenBuffer = buffer;
-    const tipo = mimetype;
-    const image = `https://apicharlotte.up.railway.app/news/${nameImage}`;
-
-    const updateData = {
-      title,
-      description,
-      category,
-      tags,
-      image,
-      detalles,
-      nameImage,
-      imagenBuffer,
-      tipo
-    };
-
-    conn.query(
-      // Modifica la consulta para realizar una actualización
-      "UPDATE NEWS SET ? WHERE idNews = ?",
-      [updateData, req.params.id], // Utiliza un identificador (por ejemplo, 'id') para especificar qué fila actualizar
-      (err, rows) => {
-        console.log(
-          err
-            ? "Err UPDATE " + req.params.tabla + " " + err
-            : req.params.tabla + ": Updated"
-        );
-        res.json(
-          err
-            ? { err: "Error al actualizar la noticia" }
-            : { msg: "Noticia actualizada con éxito." }
-        );
-      }
-    );
-  });
 })
 
 module.exports = routes;
