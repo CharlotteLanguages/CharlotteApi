@@ -16,12 +16,12 @@ routes.post(
 );
 
 routes.put(
-  "/new/:tabla/:idNews",
+  "/new/:idNews",
   imagesController.upload,
   imagesController.updateImage
 );
 
-routes.get('/news', (req, res) => {
+routes.get('/new', (req, res) => {
   req.getConnection((err, conn) => {
     if (err) return res.send(err)
     conn.query('SELECT idNews, title, description, category, tags, image as imagen_url, nameImage, tipo, detalles FROM NEWS', (err, rows) => {
@@ -41,7 +41,7 @@ routes.get('/new/:id', (req, res) => {
   })
 })
 
-routes.get('/news/:nameImage', (req, res) => {
+routes.get('/new/:nameImage', (req, res) => {
   const id = req.params.nameImage;
   const sql = 'SELECT nameImage, tipo, imagenBuffer FROM NEWS where nameImage = ?';
 
@@ -60,7 +60,7 @@ routes.get('/news/:nameImage', (req, res) => {
   })
 }) 
 
-routes.put('/news/:id', (req, res) =>{
+routes.put('/new/:id', (req, res) =>{
   req.getConnection((err, conn)=>{
       if(err) return res.send(err)
       conn.query('UPDATE NEWS set ? WHERE idNews = ?', [req.body, req.params.id], (err, rows)=>{
@@ -70,7 +70,7 @@ routes.put('/news/:id', (req, res) =>{
   })
 })
 
-routes.delete('/news/:id', (req, res) =>{
+routes.delete('/new/:id', (req, res) =>{
   req.getConnection((err, conn)=>{
       if(err) return res.send(err)
       conn.query('DELETE FROM NEWS WHERE idNews = ?', [req.params.id], (err, rows)=>{

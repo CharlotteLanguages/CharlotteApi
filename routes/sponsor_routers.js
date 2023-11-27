@@ -15,6 +15,12 @@ routes.post(
     imagesController.uploadFile
 );
 
+routes.put(
+    "/:idPatrocinador",
+    imagesController.upload,
+    imagesController.updateImage
+);
+
 routes.get('/', (req, res) => {
     req.getConnection((err, conn) => {
         if (err) return res.send(err)

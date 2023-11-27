@@ -32,8 +32,8 @@ exports.uploadFile = (req, res) => {
         );
         res.json(
           err
-            ? { err: "Error al cargar la noticia" }
-            : { msg: "Noticia cargada con exito" }
+            ? { err: "Error loading the news" }
+            : { msg: "News loaded with success" }
         );
       }
     );
@@ -66,7 +66,7 @@ exports.updateImage = (req, res) => {
     }
 
     conn.query(
-      "UPDATE " + req.params.tabla + " SET ? WHERE idNews = ?",
+      "UPDATE NEWS SET ? WHERE idNews = ?",
       [updatedFields, req.params.idNews],  
       (err, rows) => {
         console.log(
@@ -76,8 +76,8 @@ exports.updateImage = (req, res) => {
         );
         res.json(
           err
-            ? { err: "Error al actualizar la noticia" }
-            : { msg: "Noticia actualizada con éxito" }
+            ? { err: "Error updating the news" }
+            : { msg: "News updated successfully" }
         );
       }
     );
