@@ -15,6 +15,12 @@ routes.post(
     imagesController.updloadFile
 );
 
+routes.put(
+    "/:idPerson",
+    imagesController.upload,
+    imagesController.updateImage
+)
+
 //Metodo para buscar la lista completa de personas
 routes.get('/', (req, res) => {
     req.getConnection((err, conn) => {
