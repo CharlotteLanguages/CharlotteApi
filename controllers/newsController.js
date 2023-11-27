@@ -22,7 +22,7 @@ exports.uploadFile = (req, res) => {
     console.log('req.file:', req.file);
 
     conn.query(
-      "INSERT INTO " + req.params.tabla + " SET ?",
+      "INSERT INTO NEWS SET ?",
       [{ title, description, category, tags, image, detalles, nameImage, imagenBuffer, tipo }],
       (err, rows) => {
         console.log(

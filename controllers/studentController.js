@@ -19,7 +19,7 @@ exports.updloadFile = (req, res) => {
         const imagen = `https://apicharlotte.up.railway.app/student/student/${nameImagen}`
 
         conn.query(
-            "INSERT INTO " + req.params.tabla + " set ?",
+            "INSERT INTO PERSON set ?",
             [{ name, lastName, birthDate, gender, email, userName, password, detail, idMembership_fk, idRol_fk, imagen, nameImagen, imageBuffer, tipo }],
             (err, rows) => {
                 console.log(

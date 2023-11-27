@@ -20,7 +20,7 @@ exports.uploadFile = (req, res) => {
 
 
     conn.query(
-        "INSERT INTO " + req.params.tabla + " set ?",
+        "INSERT INTO PATROCINADOR set ?",
         [{ nombre, direccion, webSite, image, nameImage, imagenBuffer, tipo  }],
         (err, rows) => {
           console.log(

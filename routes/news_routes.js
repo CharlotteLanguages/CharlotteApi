@@ -10,7 +10,7 @@ const imagesController = require("../controllers/newsController");
 const { SourceTextModule } = require('vm');
 
 routes.post(
-  "/new/:tabla",
+  "/new",
   imagesController.upload,
   imagesController.uploadFile
 );
