@@ -1,17 +1,17 @@
-const express = require('express');
-const router = express.Router();
-const db  = require('./dbConnection');
-const { signupValidation, loginValidation } = require('./validation');
-const { validationResult } = require('express-validator');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
- 
-router.post('/login', loginValidation, (req, res, next) => {
+//const express = require('express');
+//const router = express.Router();
+//const db  = require('./dbConnection');
+//const { signupValidation, loginValidation } = require('./validation');
+//const { validationResult } = require('express-validator');
+//const bcrypt = require('bcryptjs');
+//const jwt = require('jsonwebtoken');
+
+/*router.post('/login', loginValidation, (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
 
   db.query(
-    'SELECT * FROM PERSON WHERE email = ?',
+    'SELECT email, password FROM PERSON WHERE email = ?',
     [email],
     (err, result) => {
       if (err) {
@@ -57,6 +57,23 @@ router.post('/login', loginValidation, (req, res, next) => {
     }
   );
 });
-
  
+module.exports = router;*/
+
+
+// Rutas relacionadas con la autenticación
+const express = require('express');
+const { login } = require('../CharlotteApi/controllers/authController');
+const authenticateToken = require('../CharlotteApi/middlewares/authMiddleware');
+
+const router = express.Router();
+
+// Ruta para iniciar sesión
+router.post('/login', login);
+
+// Ruta protegida que requiere un token válido
+router.get('/protected', authenticateToken, (req, res) => {
+  res.json({ message: 'Ruta protegida' });
+});
+
 module.exports = router;
