@@ -65,10 +65,10 @@ app.use(bodyParser.urlencoded({
 }));
 app.set('port', process.env.PORT || 3000)
 const dbOptions = {
-    host: 'containers-us-west-153.railway.app',
-    port: 5905,
+    host: 'roundhouse.proxy.rlwy.net',
+    port: 25195,
     user: 'root',
-    password: '4UuCsu5O6YBY7ZUlSXLr',
+    password: 'Gda1Ffh-3DD41AEdc2E54CBCD5g-GG21',
     database: 'railway'
 }
 
