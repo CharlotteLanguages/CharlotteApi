@@ -1,12 +1,12 @@
-//const express = require('express');
-//const router = express.Router();
-//const db  = require('./dbConnection');
-//const { signupValidation, loginValidation } = require('./validation');
-//const { validationResult } = require('express-validator');
-//const bcrypt = require('bcryptjs');
-//const jwt = require('jsonwebtoken');
+const express = require('express');
+const router = express.Router();
+const db  = require('./dbConnection');
+const { signupValidation, loginValidation } = require('./validation');
+const { validationResult } = require('express-validator');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
-/*router.post('/login', loginValidation, (req, res, next) => {
+router.post('/login', loginValidation, (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
 
@@ -58,11 +58,11 @@
   );
 });
  
-module.exports = router;*/
+module.exports = router;
 
 
 // Rutas relacionadas con la autenticación
-const express = require('express');
+/*const express = require('express');
 const { login } = require('../CharlotteApi/controllers/authController');
 const authenticateToken = require('../CharlotteApi/middlewares/authMiddleware');
 
@@ -76,4 +76,4 @@ router.get('/protected', authenticateToken, (req, res) => {
   res.json({ message: 'Ruta protegida' });
 });
 
-module.exports = router;
+module.exports = router;*/
