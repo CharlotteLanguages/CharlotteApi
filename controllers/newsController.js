@@ -16,7 +16,7 @@ exports.uploadFile = (req, res) => {
     const nameImage = originalname;
     const imagenBuffer = buffer;
     const tipo = mimetype;
-    const image = `https://apicharlotte.up.railway.app/news/${nameImage}`;
+    const image = `https://apicharlotte.up.railway.app/new/new/${nameImage}`;
 
     console.log('req.body:', req.body);
     console.log('req.file:', req.file);
@@ -57,7 +57,7 @@ exports.updateImage = (req, res) => {
       const { originalname, buffer, mimetype } = req.file;
       const nameImage = originalname;
       const tipo = mimetype;
-      const image = `https://apicharlotte.up.railway.app/news/${nameImage}`;
+      const image = `https://apicharlotte.up.railway.app/new/new/${nameImage}`;
 
       updatedFields.nameImage = nameImage;
       updatedFields.imagenBuffer = buffer;

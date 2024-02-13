@@ -118,7 +118,7 @@ app.use('/razonRol', routesRazonesRol)
 app.use('/razonesSocialNetworks', routesRazonesSocialNetworks)
 
 app.use('/', routes)
-app.use('/', routesNew)
+app.use('/new', routesNew)
 
 app.use('/', routesImagenDefault)
 

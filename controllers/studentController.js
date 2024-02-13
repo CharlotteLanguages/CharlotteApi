@@ -18,6 +18,9 @@ exports.updloadFile = (req, res) => {
         const tipo = mimetype
         const imagen = `https://apicharlotte.up.railway.app/student/student/${nameImagen}`
 
+        console.log('req.body:', req.body);
+    console.log('req.file:', req.file);
+
         conn.query(
             "INSERT INTO PERSON set ?",
             [{ name, lastName, birthDate, gender, email, userName, password, detail, idMembership_fk, idRol_fk, imagen, nameImagen, imageBuffer, tipo }],

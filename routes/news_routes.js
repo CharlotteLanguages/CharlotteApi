@@ -7,21 +7,21 @@ const routes = express.Router();
 const db = require('../dbConnection');
 
 const imagesController = require("../controllers/newsController");
-const { SourceTextModule } = require('vm');
+//const { SourceTextModule } = require('vm');
 
 routes.post(
-  "/new",
+  "/",
   imagesController.upload,
   imagesController.uploadFile
 );
 
 routes.put(
-  "/new/:idNews",
+  "/:idNews",
   imagesController.upload,
   imagesController.updateImage
 );
 
-routes.get('/new', (req, res) => {
+routes.get('/', (req, res) => {
   req.getConnection((err, conn) => {
     if (err) return res.send(err)
     conn.query('SELECT idNews, title, description, category, tags, image as imagen_url, nameImage, tipo, detalles FROM NEWS', (err, rows) => {
@@ -31,7 +31,7 @@ routes.get('/new', (req, res) => {
   })
 })
 
-routes.get('/new/:id', (req, res) => {
+routes.get('/:id', (req, res) => {
   req.getConnection((err, conn) => {
     if (err) return res.send(err)
     conn.query('SELECT idNews, title, description, category, tags, image as imagen_url, nameImage, tipo, detalles FROM NEWS WHERE idNews = ?', [req.params.id], (err, rows) => {
@@ -60,7 +60,7 @@ routes.get('/new/:nameImage', (req, res) => {
   })
 }) 
 
-routes.put('/new/:id', (req, res) =>{
+routes.put('/:id', (req, res) =>{
   req.getConnection((err, conn)=>{
       if(err) return res.send(err)
       conn.query('UPDATE NEWS set ? WHERE idNews = ?', [req.body, req.params.id], (err, rows)=>{
@@ -70,7 +70,7 @@ routes.put('/new/:id', (req, res) =>{
   })
 })
 
-routes.delete('/new/:id', (req, res) =>{
+routes.delete('/:id', (req, res) =>{
   req.getConnection((err, conn)=>{
       if(err) return res.send(err)
       conn.query('DELETE FROM NEWS WHERE idNews = ?', [req.params.id], (err, rows)=>{
